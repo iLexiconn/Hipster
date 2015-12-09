@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="app_name">Hipster</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="today">Vandaag</string>
+    <string name="recent_marks">Laatste Cijfers</string>
+    <string name="login">Login</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="grades">Cijfers</string>
+    <string name="timetable">Rooster</string>
+    <string name="settings">Instellingen</string>
+    <string name="logo">Logo</string>
+    <string name="school">School</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="password">Wachtwoord</string>
+    <string name="invalid_school">Voer een geldige school in</string>
+    <string name="invalid_password">Fout wachtwoord</string>
+    <string name="profile_picture">Profiel Foto</string>
+    <string name="logout">Uitloggen</string>
+    <string name="no_intertnet">Geen internet</string>
+    <string name="no_appointments">Helemaal niks!</string>
+
+</resources>

@@ -1,0 +1,3 @@
+[submodule "magister.java"]
+	path = magister.java
+	url = https://github.com/iLexiconn/Magister.java.git
