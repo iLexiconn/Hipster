@@ -9,13 +9,16 @@ import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import net.ilexiconn.hipster.R;
+import net.ilexiconn.hipster.notification.HipsterNotification;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.Grade;
 import net.ilexiconn.magister.handler.GradeHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class HipsterBroadcastReceiver extends BroadcastReceiver {
     private NotificationManager notificationManager;
@@ -37,38 +40,44 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
         new CheckGradesThread().execute();
     }
 
-    public class CheckGradesThread extends AsyncTask<Void, Void, Grade> {
+    public class CheckGradesThread extends AsyncTask<Void, Void, Grade[]> {
         @Override
         public void onPreExecute() {
-            Log.i("HIPSTER", "Checking for new grades");
+            Log.d("HIPSTER", "Checking for new grades");
         }
 
         @Override
-        public Grade doInBackground(Void... params) {
+        public Grade[] doInBackground(Void... params) {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date());
                 calendar.add(Calendar.MINUTE, -15);
                 Date date = calendar.getTime();
+                List<Grade> gradeList = new ArrayList<>();
                 for (Grade grade : magister.getHandler(GradeHandler.class).getRecentGrades()) {
                     if (grade.filledInDate.after(date)) {
-                        return grade;
+                        gradeList.add(grade);
                     }
                 }
-                return null;
+                if (gradeList.isEmpty()) {
+                    return null;
+                }
+                return gradeList.toArray(new Grade[gradeList.size()]);
             } catch (IOException e) {
                 return null;
             }
         }
 
         @Override
-        public void onPostExecute(Grade grade) {
-            if (grade != null) {
-                Log.i("HIPSTER", "Found new grades, notifying user");
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context).setSmallIcon(R.drawable.ic_people_black_24dp).setContentTitle("Hipster").setContentText("Je hebt een " + grade.grade + " voor " + grade.course.name + " gekregen.");
-                notificationManager.notify(0, builder.build());
+        public void onPostExecute(Grade[] grades) {
+            if (grades != null) {
+                Log.d("HIPSTER", "Found new grades, notifying user");
+                for (Grade grade : grades) {
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context).setSmallIcon(R.drawable.ic_people_black_24dp).setContentTitle("Hipster").setContentText("Je hebt een " + grade.grade + " voor " + grade.course.name + " gekregen.");
+                    notificationManager.notify(HipsterNotification.getUniqueID(), builder.build());
+                }
             } else {
-                Log.i("HIPSTER", "No new grades found");
+                Log.d("HIPSTER", "No new grades found");
             }
             wakeLock.release();
         }
