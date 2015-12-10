@@ -4,7 +4,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:padding="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:weightSum="1">
 
     <LinearLayout
@@ -72,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:textSize="14sp"
+            android:textSize="1sp"
             android:textColor="@color/textSecondary"
             android:text=""/>
 
