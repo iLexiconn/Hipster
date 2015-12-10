@@ -3,8 +3,18 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
-    <Preference
-            android:title="@string/logout"
-            android:key="@string/logout"/>
+    <PreferenceCategory
+            android:title="@string/user_interface">
+        <Preference
+                android:title="@string/color"
+                android:key="@string/color"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/account">
+        <Preference
+                android:title="@string/logout"
+                android:key="@string/logout"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

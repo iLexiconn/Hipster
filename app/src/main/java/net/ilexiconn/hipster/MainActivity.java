@@ -5,9 +5,12 @@ import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.*;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,10 +28,13 @@ import net.ilexiconn.magister.ParcelableMagister;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ParcelableMagister magister;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         magister = getIntent().getParcelableExtra("magister");
         setTitle(getString(R.string.app_name));
@@ -53,11 +59,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
         }
 
+        int color = sharedPreferences.getInt("color", 0x0096DB);
+        findViewById(R.id.toolbar).setBackgroundColor(color);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(color);
+        }
+
         setFragment(R.id.nav_dashboard);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        int color = sharedPreferences.getInt("color", 0x0096DB);
+        findViewById(R.id.menu_header).setBackgroundColor(color);
         new ImageThread().execute();
         return super.onCreateOptionsMenu(menu);
     }

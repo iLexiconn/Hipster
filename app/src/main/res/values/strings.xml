@@ -20,5 +20,8 @@
     <string name="logout">Uitloggen</string>
     <string name="no_intertnet">Geen internet</string>
     <string name="no_appointments">Helemaal niks!</string>
+    <string name="color">Kleur</string>
+    <string name="user_interface">Gebruikers Interface</string>
+    <string name="account">Account</string>
 
 </resources>
