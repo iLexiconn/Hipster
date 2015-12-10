@@ -28,13 +28,13 @@ import net.ilexiconn.magister.ParcelableMagister;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ParcelableMagister magister;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         magister = getIntent().getParcelableExtra("magister");
         setTitle(getString(R.string.app_name));
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        int color = sharedPreferences.getInt("color", 0x0096DB);
+        int color = preferences.getInt("color", 0x0096DB);
         findViewById(R.id.toolbar).setBackgroundColor(color);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(color);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int color = sharedPreferences.getInt("color", 0x0096DB);
+        int color = preferences.getInt("color", 0x0096DB);
         findViewById(R.id.menu_header).setBackgroundColor(color);
         new ImageThread().execute();
         return super.onCreateOptionsMenu(menu);

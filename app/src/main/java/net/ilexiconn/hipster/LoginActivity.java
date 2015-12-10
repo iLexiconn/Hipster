@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +23,18 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_login);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int color = preferences.getInt("color", 0x0096DB);
+        findViewById(R.id.login_toolbar).setBackgroundColor(color);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(color);
+        }
+
         if (preferences.getBoolean("loggedIn", false)) {
             new LoginThread().execute(preferences.getString("school", "").replaceAll(" ", "%20"), preferences.getString("username", ""), preferences.getString("password", ""));
         }
-
-        setContentView(R.layout.activity_login);
 
         Button buttonLogin = (Button) findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
