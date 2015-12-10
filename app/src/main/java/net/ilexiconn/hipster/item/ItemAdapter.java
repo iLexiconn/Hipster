@@ -25,6 +25,7 @@ public class ItemAdapter extends Adapter<ItemHolder> {
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
         Item row = itemList.get(position);
+        holder.itemView.setBackgroundColor(row.color);
         holder.string1.setText(row.string1);
         holder.string2.setText(row.string2);
         holder.string3.setText(row.string3);

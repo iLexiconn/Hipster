@@ -5,8 +5,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="1dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:weightSum="1">
 
     <LinearLayout
@@ -20,7 +18,8 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:textSize="18sp"
-                android:textColor="@color/textPrimary"/>
+                android:textColor="@color/textPrimary"
+                android:layout_marginLeft="8dp"/>
 
         <TextView
                 android:id="@+id/string2"
@@ -29,7 +28,8 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textSize="18sp"
-                android:textColor="@color/textPrimary"/>
+                android:textColor="@color/textPrimary"
+                android:layout_marginRight="8dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -59,14 +59,16 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:textColor="@color/textSecondary"/>
+                android:textColor="@color/textSecondary"
+                android:layout_marginLeft="8dp"/>
 
         <TextView
                 android:id="@+id/string4"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textSize="14sp"
-                android:textColor="@color/textSecondary"/>
+                android:textColor="@color/textSecondary"
+                android:layout_marginRight="8dp"/>
     </LinearLayout>
 
     <TextView
