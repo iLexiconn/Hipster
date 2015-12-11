@@ -1,79 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF">
 
-    <LinearLayout
-            android:layout_height="match_parent"
+    <RelativeLayout
+            android:orientation="horizontal"
+            android:id="@+id/login_toolbar"
+            android:background="@color/primary"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+        <TextView
+                android:textSize="64sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/app_name"/>
+
+    </RelativeLayout>
+
+    <ImageView
+            android:id="@+id/login_circle"
+            android:src="@drawable/circle"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+
+            android:layout_below="@id/login_toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-50dip"/>
+
+    <ImageView
+            android:id="@+id/login_icon"
+            android:layout_alignTop="@id/login_circle"
+            android:layout_alignLeft="@id/login_circle"
+            android:src="@drawable/ic_people_black_24dp"
+            android:tint="@color/primary"
+            android:layout_height="100dp"
+            android:layout_width="120dp"/>
+
+    <EditText
+            android:id="@+id/input_school"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="10dip"
+            android:layout_below="@id/login_icon"
+            android:inputType="text"
+            android:hint="@string/school"/>
+
+    <EditText
+            android:id="@+id/input_username"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="10dip"
+            android:layout_below="@id/input_school"
+            android:inputType="text"
+            android:hint="@string/username"/>
+
+    <EditText
+            android:id="@+id/input_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="10dip"
+            android:layout_below="@id/input_username"
+            android:inputType="textPassword"
+            android:hint="@string/password"/>
+
+    <Button
+            android:id="@+id/button_login"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:weightSum="0.7">
-
-        <android.support.v7.widget.Toolbar
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/login_toolbar"
-                android:layout_height="0dp"
-                android:layout_width="match_parent"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/Theme.AppCompat.Light"
-                android:background="@color/primary"
-                android:layout_weight="0.50">
-
-            <ImageView
-                    android:src="@drawable/title"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-            <EditText
-                    android:id="@+id/input_school"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapWords"
-                    android:hint="@string/school"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText
-                    android:id="@+id/input_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="@string/username"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText
-                    android:id="@+id/input_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:hint="@string/password"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-                android:id="@+id/button_login"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                />
-
-    </LinearLayout>
-
-</android.support.v4.widget.DrawerLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="10dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="10dip"
+            android:layout_below="@id/input_password"
+            android:text="@string/login"
+            />
+</RelativeLayout>
