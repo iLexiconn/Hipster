@@ -22,32 +22,28 @@
                     android:layout_height="match_parent">
 
                 <LinearLayout
+                        android:id="@+id/appoinements_header"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:background="@color/primary">
 
                     <ImageView
                             android:src="@drawable/ic_watch_later_black_24dp"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:alpha="0.54"/>
+                            android:tint="#FFFFFF"/>
 
                     <TextView
                             android:text="@string/today"
                             android:textSize="18sp"
-                            android:textColor="@color/textPrimary"
+                            android:textColor="#FFFFFF"
                             android:gravity="top|right"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
-
-                <View
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        android:background="@android:color/black"
-                        android:alpha="0.12"/>
 
                 <LinearLayout
                         android:orientation="vertical"
@@ -63,32 +59,28 @@
                     android:layout_height="match_parent">
 
                 <LinearLayout
+                        android:id="@+id/recent_grades_header"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:background="@color/primary">
 
                     <ImageView
                             android:src="@drawable/ic_done_all_black_24dp"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:alpha="0.54"/>
+                            android:tint="#FFFFFF"/>
 
                     <TextView
                             android:text="@string/recent_marks"
                             android:textSize="18sp"
-                            android:textColor="@color/textPrimary"
+                            android:textColor="#FFFFFF"
                             android:gravity="top|right"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
-
-                <View
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        android:background="@android:color/black"
-                        android:alpha="0.12"/>
 
                 <LinearLayout
                         android:orientation="vertical"

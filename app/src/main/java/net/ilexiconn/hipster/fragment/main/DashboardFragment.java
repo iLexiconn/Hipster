@@ -1,8 +1,10 @@
 package net.ilexiconn.hipster.fragment.main;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -28,13 +30,16 @@ import java.util.List;
 import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
-    public SwipeRefreshLayout swipeRefresh;
-    public View view;
+    private SwipeRefreshLayout swipeRefresh;
+    private View view;
+    private SharedPreferences preferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_main_dashboard, container, false);
+
+            preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_dashboard);
             swipeRefresh.setColorSchemeResources(R.color.primary);
@@ -44,6 +49,10 @@ public class DashboardFragment extends Fragment {
                     refresh();
                 }
             });
+
+            int color = preferences.getInt("color", -16738597);
+            view.findViewById(R.id.appoinements_header).setBackgroundColor(color);
+            view.findViewById(R.id.recent_grades_header).setBackgroundColor(color);
 
             refresh();
         }

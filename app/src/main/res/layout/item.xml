@@ -74,6 +74,7 @@
     </LinearLayout>
 
     <View
+            android:id="@+id/item_line"
             android:layout_height="1dp"
             android:layout_width="match_parent"
             android:background="@android:color/black"

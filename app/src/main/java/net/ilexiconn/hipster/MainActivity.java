@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        int color = preferences.getInt("color", 0x0096DB);
+        int color = preferences.getInt("color", -16738597);
         findViewById(R.id.toolbar).setBackgroundColor(color);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(color);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int color = preferences.getInt("color", 0x0096DB);
+        int color = preferences.getInt("color", -16738597);
         findViewById(R.id.menu_header).setBackgroundColor(color);
         new ImageThread().execute();
         return super.onCreateOptionsMenu(menu);

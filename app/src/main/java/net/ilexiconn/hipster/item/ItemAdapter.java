@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.item;
 
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import net.ilexiconn.hipster.R;
@@ -31,9 +32,12 @@ public class ItemAdapter extends Adapter<ItemHolder> {
         holder.string3.setText(row.string3);
         holder.string4.setText(row.string4);
         if (row.special.isEmpty()) {
-            holder.removeSpecial();
+            holder.itemView.findViewById(R.id.special_layout).setVisibility(View.GONE);
         } else {
             holder.special.setText(row.special);
+        }
+        if (position == getItemCount() - 1) {
+            holder.itemView.findViewById(R.id.item_line).setVisibility(View.INVISIBLE);
         }
     }
 

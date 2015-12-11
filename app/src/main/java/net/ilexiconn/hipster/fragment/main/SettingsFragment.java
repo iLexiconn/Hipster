@@ -20,7 +20,8 @@ import net.ilexiconn.hipster.R;
 import java.io.IOException;
 
 public class SettingsFragment extends PreferenceFragment {
-    public View view;
+    private View view;
+    private SharedPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 new LogoutThread().execute();
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                SharedPreferences.Editor editor = preferences.edit();
                 editor.putBoolean("loggedIn", false);
                 editor.putString("school", "");
                 editor.putString("username", "");
@@ -49,8 +50,7 @@ public class SettingsFragment extends PreferenceFragment {
         color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                int color = sharedPreferences.getInt("color", 0x0096DB);
+                int color = preferences.getInt("color", -16738597);
                 int r = (color >> 16) & 0xFF;
                 int g = (color >> 8) & 0xFF;
                 int b = (color) & 0xFF;
@@ -69,7 +69,7 @@ public class SettingsFragment extends PreferenceFragment {
                             getActivity().getWindow().setStatusBarColor(selectedColorRGB);
                         }
 
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                        SharedPreferences.Editor editor = preferences.edit();
                         editor.putInt("color", selectedColorRGB);
                         editor.apply();
 
@@ -85,6 +85,11 @@ public class SettingsFragment extends PreferenceFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_main_settings, container, false);
+
+            preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+            int color = preferences.getInt("color", -16738597);
+            view.findViewById(R.id.settings_header).setBackgroundColor(color);
         }
 
         return view;

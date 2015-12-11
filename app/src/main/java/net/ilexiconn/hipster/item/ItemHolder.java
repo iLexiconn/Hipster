@@ -1,7 +1,6 @@
 package net.ilexiconn.hipster.item;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.ilexiconn.hipster.R;
@@ -20,9 +19,5 @@ public class ItemHolder extends ViewHolder {
         string3 = (TextView) row.findViewById(R.id.string3);
         string4 = (TextView) row.findViewById(R.id.string4);
         special = (TextView) row.findViewById(R.id.special);
-    }
-
-    public void removeSpecial() {
-        itemView.findViewById(R.id.special_layout).setVisibility(View.GONE);
     }
 }

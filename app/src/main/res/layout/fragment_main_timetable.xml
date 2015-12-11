@@ -1,62 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_timetable">
+        android:layout_height="match_parent">
 
-    <ScrollView
-            android:layout_height="match_parent"
+    <LinearLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:scrollbars="vertical">
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
         <LinearLayout
-                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
             <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/timetable_header"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:background="@color/primary">
 
-                <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:padding="8dp">
-
-                    <ImageView
-                            android:src="@drawable/ic_watch_later_black_24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:alpha="0.54"
-                            android:contentDescription="@string/logo"/>
-
-                    <TextView
-                            android:text="@string/timetable"
-                            android:textSize="18sp"
-                            android:textColor="@color/textPrimary"
-                            android:gravity="top|right"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <View
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        android:background="@android:color/black"
-                        android:alpha="0.12"/>
-
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:id="@+id/timetable_container"
+                <TextView
+                        android:text="@string/timetable"
+                        android:textSize="18sp"
+                        android:textColor="#FFFFFF"
+                        android:gravity="top|right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-
             </LinearLayout>
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/fragment_timetable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <ScrollView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:scrollbars="vertical">
+
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:id="@+id/timetable_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                </ScrollView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+
         </LinearLayout>
-    </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</LinearLayout>
