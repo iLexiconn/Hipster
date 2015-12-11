@@ -1,4 +1,4 @@
-package net.ilexiconn.hipster.fragment;
+package net.ilexiconn.hipster.fragment.main;
 
 import android.app.Fragment;
 import android.os.AsyncTask;
@@ -14,25 +14,25 @@ import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.item.Item;
 import net.ilexiconn.hipster.item.ItemAdapter;
-import net.ilexiconn.magister.container.Grade;
-import net.ilexiconn.magister.handler.GradeHandler;
-import org.ocpsoft.prettytime.PrettyTime;
+import net.ilexiconn.magister.container.Appointment;
+import net.ilexiconn.magister.handler.AppointmentHandler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class GradesFragment extends Fragment {
+public class TimetableFragment extends Fragment {
     public SwipeRefreshLayout swipeRefresh;
     public View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_grades, container, false);
+            view = inflater.inflate(R.layout.fragment_main_timetable, container, false);
 
-            swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_grades);
+            swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_timetable);
             swipeRefresh.setColorSchemeResources(R.color.primary);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -61,37 +61,37 @@ public class GradesFragment extends Fragment {
 
     public void refresh() {
         swipeRefresh.setRefreshing(true);
-        new GradeThread().execute();
+        new AppointmentThread().execute();
     }
 
-    public class GradeThread extends AsyncTask<Void, Void, Grade[]> {
+    public class AppointmentThread extends AsyncTask<Void, Void, Appointment[]> {
         @Override
-        public Grade[] doInBackground(Void... params) {
-            GradeHandler gradeHandler = ((MainActivity) getActivity()).getMagister().getHandler(GradeHandler.class);
+        public Appointment[] doInBackground(Void... params) {
+            AppointmentHandler appointmentHandler = ((MainActivity) getActivity()).getMagister().getHandler(AppointmentHandler.class);
             try {
-                return gradeHandler.getGrades(true, false, true);
+                return appointmentHandler.getAppointmentsOfToday();
             } catch (IOException e) {
                 return null;
             }
         }
 
         @Override
-        public void onPostExecute(Grade[] grades) {
-            if (grades != null) {
-                PrettyTime prettyTime = new PrettyTime(new Locale("nl"));
+        public void onPostExecute(Appointment[] appointments) {
+            if (appointments != null) {
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 List<Item> itemList = new ArrayList<>();
-                for (Grade grade : grades) {
-                    String string1 = grade.course.name;
-                    String string2 = grade.grade;
-                    String string3 = grade.filledInBy;
-                    String string4 = grade.filledInDate == null ? "" : prettyTime.format(grade.filledInDate);
+                for (Appointment appointment : appointments) {
+                    String string1 = appointment.courses.length > 0 ? appointment.courses[0].name : "";
+                    String string2 = appointment.location;
+                    String string3 = appointment.teachers.length > 0 ? appointment.teachers[0].abbreviation : "";
+                    String string4 = format.format(appointment.startDate) + " - " + format.format(appointment.endDate);
                     itemList.add(new Item(string1, string2, string3, string4));
                 }
                 if (itemList.isEmpty()) {
                     itemList.add(new Item(getString(R.string.no_appointments)));
                 }
-                LinearLayout gradesLayout = (LinearLayout) view.findViewById(R.id.grades_container);
-                populateLayout(gradesLayout, new ItemAdapter(itemList));
+                LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.timetable_container);
+                populateLayout(todayLayout, new ItemAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_intertnet), Snackbar.LENGTH_LONG);
             }

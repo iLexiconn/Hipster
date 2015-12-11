@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         magister = getIntent().getParcelableExtra("magister");
-        setTitle(getString(R.string.app_name));
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getWindow().setStatusBarColor(color);
         }
 
-        setFragment(R.id.nav_dashboard);
+        setFragment(Fragments.DASHBOARD);
     }
 
     @Override
@@ -89,19 +88,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        setFragment(id);
+        setFragment(Fragments.getFragmentFromID(id));
         return true;
     }
 
-    public void setFragment(int id) {
-        Fragments fragments = Fragments.getFragmentFromID(id);
-        if (fragments == null) {
+    public void setFragment(Fragments fragment) {
+        if (fragment == null) {
             return;
         }
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragments.getFragment());
+        transaction.replace(R.id.fragment_container_main, fragment.getFragment());
         ImageView icon = (ImageView) findViewById(R.id.toolbar_icon);
-        icon.setImageResource(fragments.getIcon());
+        icon.setImageResource(fragment.getIcon());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         transaction.commit();

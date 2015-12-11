@@ -2,6 +2,10 @@ package net.ilexiconn.hipster.fragment;
 
 import android.app.Fragment;
 import net.ilexiconn.hipster.R;
+import net.ilexiconn.hipster.fragment.main.DashboardFragment;
+import net.ilexiconn.hipster.fragment.main.GradesFragment;
+import net.ilexiconn.hipster.fragment.main.SettingsFragment;
+import net.ilexiconn.hipster.fragment.main.TimetableFragment;
 
 public enum Fragments {
     DASHBOARD(R.id.nav_dashboard, new DashboardFragment(), R.drawable.ic_class_black_24dp),

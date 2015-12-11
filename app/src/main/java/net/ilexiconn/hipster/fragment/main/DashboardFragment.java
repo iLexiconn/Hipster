@@ -1,4 +1,4 @@
-package net.ilexiconn.hipster.fragment;
+package net.ilexiconn.hipster.fragment.main;
 
 import android.app.Fragment;
 import android.os.AsyncTask;
@@ -34,7 +34,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+            view = inflater.inflate(R.layout.fragment_main_dashboard, container, false);
 
             swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_dashboard);
             swipeRefresh.setColorSchemeResources(R.color.primary);

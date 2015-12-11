@@ -1,4 +1,4 @@
-package net.ilexiconn.hipster.fragment;
+package net.ilexiconn.hipster.fragment.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -79,7 +79,7 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_settings, container, false);
+            view = inflater.inflate(R.layout.fragment_main_settings, container, false);
         }
 
         return view;
