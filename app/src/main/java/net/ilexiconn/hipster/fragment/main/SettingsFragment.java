@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.fragment.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -13,7 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import net.ilexiconn.hipster.LoginActivity;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
+
+import java.io.IOException;
 
 public class SettingsFragment extends PreferenceFragment {
     public View view;
@@ -27,6 +31,7 @@ public class SettingsFragment extends PreferenceFragment {
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                new LogoutThread().execute();
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                 editor.putBoolean("loggedIn", false);
                 editor.putString("school", "");
@@ -83,5 +88,17 @@ public class SettingsFragment extends PreferenceFragment {
         }
 
         return view;
+    }
+
+    public class LogoutThread extends AsyncTask<Void, Void, Void> {
+        @Override
+        public Void doInBackground(Void... params) {
+            try {
+                ((MainActivity) getActivity()).getMagister().logout();
+            } catch (IOException e) {
+
+            }
+            return null;
+        }
     }
 }
