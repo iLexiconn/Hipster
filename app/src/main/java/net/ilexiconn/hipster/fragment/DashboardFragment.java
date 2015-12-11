@@ -127,6 +127,9 @@ public class DashboardFragment extends Fragment {
                     String string4 = prettyTime.format(grade.filledInDate);
                     itemList.add(new Item(string1, string2, string3, string4));
                 }
+                if (itemList.isEmpty()) {
+                    itemList.add(new Item(getString(R.string.no_appointments)));
+                }
                 LinearLayout gradesLayout = (LinearLayout) view.findViewById(R.id.recent_grades_container);
                 populateLayout(gradesLayout, new ItemAdapter(itemList));
             } else {

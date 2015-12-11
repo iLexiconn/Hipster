@@ -87,6 +87,9 @@ public class TimetableFragment extends Fragment {
                     String string4 = format.format(appointment.startDate) + " - " + format.format(appointment.endDate);
                     itemList.add(new Item(string1, string2, string3, string4));
                 }
+                if (itemList.isEmpty()) {
+                    itemList.add(new Item(getString(R.string.no_appointments)));
+                }
                 LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.timetable_container);
                 populateLayout(todayLayout, new ItemAdapter(itemList));
             } else {
