@@ -9,4 +9,12 @@
         app:popupTheme="@style/Theme.AppCompat.Light"
         android:background="@color/primary">
 
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:tint="#ffffff"
+            android:id="@+id/toolbar_icon"
+            android:layout_marginRight="12dp"/>
+
 </android.support.v7.widget.Toolbar>

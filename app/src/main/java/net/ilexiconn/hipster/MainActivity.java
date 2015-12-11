@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragments.getFragment());
+        ImageView icon = (ImageView) findViewById(R.id.toolbar_icon);
+        icon.setImageResource(fragments.getIcon());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         transaction.commit();

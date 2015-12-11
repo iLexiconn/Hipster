@@ -11,12 +11,12 @@ public enum Fragments {
 
     private int id;
     private Fragment fragment;
-    private int img;
+    private int icon;
 
-    Fragments(int id, Fragment fragment, int img) {
+    Fragments(int id, Fragment fragment, int icon) {
         this.id = id;
         this.fragment = fragment;
-        this.img = img;
+        this.icon = icon;
     }
 
     public int getId() {
@@ -27,8 +27,8 @@ public enum Fragments {
         return fragment;
     }
 
-    public int getImg() {
-        return img;
+    public int getIcon() {
+        return icon;
     }
 
     public static Fragments getFragmentFromID(int id) {
