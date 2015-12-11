@@ -33,6 +33,7 @@
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/special_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -40,8 +41,7 @@
         <TextView
                 android:id="@+id/special"
                 android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:textSize="14sp"
                 android:textColor="@color/textSecondary"
                 android:gravity="center"/>
@@ -56,9 +56,9 @@
         <TextView
                 android:id="@+id/string3"
                 android:layout_height="wrap_content"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="@color/textSecondary"
                 android:layout_marginLeft="8dp"/>
 
@@ -66,23 +66,18 @@
                 android:id="@+id/string4"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textSize="14sp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textSize="12sp"
                 android:textColor="@color/textSecondary"
                 android:layout_marginRight="8dp"/>
     </LinearLayout>
-
-    <TextView
-            android:layout_height="0dp"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textSize="1sp"
-            android:textColor="@color/textSecondary"
-            android:text=""/>
 
     <View
             android:layout_height="1dp"
             android:layout_width="match_parent"
             android:background="@android:color/black"
-            android:alpha="0.08"/>
+            android:alpha="0.12"
+            android:layout_marginTop="5dp"/>
+
 </LinearLayout>

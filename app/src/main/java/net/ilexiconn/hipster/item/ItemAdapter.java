@@ -30,7 +30,11 @@ public class ItemAdapter extends Adapter<ItemHolder> {
         holder.string2.setText(row.string2);
         holder.string3.setText(row.string3);
         holder.string4.setText(row.string4);
-        holder.special.setText(row.special);
+        if (row.special.isEmpty()) {
+            holder.removeSpecial();
+        } else {
+            holder.special.setText(row.special);
+        }
     }
 
     @Override
