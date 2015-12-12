@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.magister.ParcelableMagister;
 import net.ilexiconn.magister.container.School;
 
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.login_toolbar).setBackgroundColor(color);
         ((ImageView) findViewById(R.id.login_icon)).setColorFilter(color);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(color);
+            getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
         }
 
         if (preferences.getBoolean("loggedIn", false)) {

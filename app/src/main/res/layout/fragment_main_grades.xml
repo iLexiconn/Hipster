@@ -1,57 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <LinearLayout
-            android:layout_height="wrap_content"
+    <android.support.design.widget.TabLayout
+            android:id="@+id/grades_tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            app:tabMode="scrollable"
+            android:background="@color/primary"
+            app:tabTextColor="#90FFFFFF"
+            app:tabSelectedTextColor="#FFFFFF"/>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/grades_view"
             android:layout_width="match_parent"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:background="#FFFFFF"/>
 
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <LinearLayout
-                    android:id="@+id/grades_header"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:background="@color/primary">
-
-                <TextView
-                        android:text="@string/grades"
-                        android:textSize="18sp"
-                        android:textColor="#FFFFFF"
-                        android:gravity="top|right"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <android.support.v4.widget.SwipeRefreshLayout
-                    android:id="@+id/fragment_grades"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                <ScrollView
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        android:scrollbars="vertical">
-
-                    <LinearLayout
-                            android:orientation="vertical"
-                            android:id="@+id/grades_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                </ScrollView>
-            </android.support.v4.widget.SwipeRefreshLayout>
-
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

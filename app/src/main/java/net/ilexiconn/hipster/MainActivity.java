@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.ilexiconn.hipster.broadcast.HipsterBroadcastReceiver;
 import net.ilexiconn.hipster.fragment.Fragments;
+import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.ParcelableMagister;
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int color = preferences.getInt("color", -16738597);
         findViewById(R.id.toolbar).setBackgroundColor(color);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(color);
+            getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
         }
 
         setFragment(Fragments.DASHBOARD);
