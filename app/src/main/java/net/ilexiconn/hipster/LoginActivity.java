@@ -109,8 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                 buttonLogin.setEnabled(true);
                 textPassword.setError(getString(R.string.invalid_password));
             } else {
-                if (config.getUser(magister.user.username) == null) {
-                    User user = new User(magister.school.name, magister.user.username, magister.user.password, magister.profile.id);
+                if (config.getUserByID(magister.user.username) == null) {
+                    User user = new User(magister.school.name, magister.user.username, magister.user.password, magister.profile.nickname, magister.profile.id);
                     config.users.add(user);
                     config.currentUser = user.username;
                     ConfigUtil.saveConfig(LoginActivity.this, config);

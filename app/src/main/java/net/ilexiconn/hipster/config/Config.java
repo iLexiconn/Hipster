@@ -20,12 +20,24 @@ public class Config {
         return null;
     }
 
-    public User getUser(String name) {
-        if (name == null || name.isEmpty()) {
+    public User getUserByID(String username) {
+        if (username == null || username.isEmpty()) {
             return null;
         }
         for (User user : users) {
-            if (user.username.equals(name)) {
+            if (user.username.equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getUserByName(String nickname) {
+        if (nickname == null || nickname.isEmpty()) {
+            return null;
+        }
+        for (User user : users) {
+            if (user.nickname.equals(nickname)) {
                 return user;
             }
         }

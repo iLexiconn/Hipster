@@ -23,5 +23,7 @@
     <string name="color">Kleur</string>
     <string name="user_interface">Gebruikers Interface</string>
     <string name="account">Account</string>
+    <string name="add_account">Voeg account toe</string>
+    <string name="set_account">Verander account</string>
 
 </resources>

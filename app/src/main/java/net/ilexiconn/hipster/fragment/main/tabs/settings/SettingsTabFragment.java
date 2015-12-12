@@ -1,14 +1,17 @@
 package net.ilexiconn.hipster.fragment.main.tabs.settings;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
@@ -16,6 +19,7 @@ import net.ilexiconn.hipster.LoginActivity;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
+import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
@@ -35,6 +39,60 @@ public class SettingsTabFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 new LogoutThread().execute();
+                config.users.remove(config.getCurrentUser());
+                config.currentUser = null;
+                ConfigUtil.saveConfig(getActivity(), config);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                return true;
+            }
+        });
+
+        Preference setAccount = findPreference(getString(R.string.set_account));
+        setAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+                builderSingle.setIcon(R.drawable.ic_people_black_24dp);
+                builderSingle.setTitle("Verander account");
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
+
+                for (User user : config.users) {
+                    arrayAdapter.add(user.nickname);
+                }
+
+                builderSingle.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which != -1) {
+                            User user = config.getUserByName(arrayAdapter.getItem(which));
+                            config.currentUser = user.username;
+                            ConfigUtil.saveConfig(getActivity(), config);
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
+                    }
+                });
+                builderSingle.show();
+
+                return true;
+            }
+        });
+
+        Preference addAccount = findPreference(getString(R.string.add_account));
+        addAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
                 config.currentUser = null;
                 ConfigUtil.saveConfig(getActivity(), config);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);

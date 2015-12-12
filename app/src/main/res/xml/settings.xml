@@ -5,16 +5,28 @@
 
     <PreferenceCategory
             android:title="@string/user_interface">
+
         <Preference
                 android:title="@string/color"
                 android:key="@string/color"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
             android:title="@string/account">
+
+        <Preference
+                android:title="@string/add_account"
+                android:key="@string/add_account"/>
+
+        <Preference
+                android:title="@string/set_account"
+                android:key="@string/set_account"/>
+
         <Preference
                 android:title="@string/logout"
                 android:key="@string/logout"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

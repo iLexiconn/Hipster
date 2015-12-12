@@ -29,7 +29,7 @@ import net.ilexiconn.magister.ParcelableMagister;
 
 import java.io.*;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
     private ParcelableMagister magister;
     private Config config;
 
@@ -58,7 +58,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+                    int id = item.getItemId();
+                    setFragment(Fragments.getFragmentFromID(id));
+                    return true;
+                }
+            });
         }
 
         int color = config.color;
@@ -86,13 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        setFragment(Fragments.getFragmentFromID(id));
-        return true;
     }
 
     public void setFragment(Fragments fragment) {
