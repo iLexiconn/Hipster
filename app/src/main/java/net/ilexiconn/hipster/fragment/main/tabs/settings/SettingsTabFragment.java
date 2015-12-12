@@ -1,12 +1,10 @@
 package net.ilexiconn.hipster.fragment.main.tabs.settings;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +15,15 @@ import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import net.ilexiconn.hipster.LoginActivity;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
+import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.util.ColorUtil;
+import net.ilexiconn.hipster.util.ConfigUtil;
 
 import java.io.IOException;
 
 public class SettingsTabFragment extends PreferenceFragment {
     private View view;
-    private SharedPreferences preferences;
+    private Config config;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,12 +35,8 @@ public class SettingsTabFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 new LogoutThread().execute();
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("loggedIn", false);
-                editor.putString("school", "");
-                editor.putString("username", "");
-                editor.putString("password", "");
-                editor.apply();
+                config.currentUser = null;
+                ConfigUtil.saveConfig(getActivity(), config);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -52,7 +48,7 @@ public class SettingsTabFragment extends PreferenceFragment {
         color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                int color = preferences.getInt("color", -16738597);
+                int color = config.color;
                 int r = (color >> 16) & 0xFF;
                 int g = (color >> 8) & 0xFF;
                 int b = (color) & 0xFF;
@@ -74,9 +70,8 @@ public class SettingsTabFragment extends PreferenceFragment {
                             getActivity().getWindow().setStatusBarColor(ColorUtil.darker(selectedColorRGB, 0.75f));
                         }
 
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putInt("color", selectedColorRGB);
-                        editor.apply();
+                        config.color = selectedColorRGB;
+                        ConfigUtil.saveConfig(getActivity(), config);
 
                         colorPicker.dismiss();
                     }
@@ -91,8 +86,7 @@ public class SettingsTabFragment extends PreferenceFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.tab_settings_settings, container, false);
 
-            preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
+            config = ConfigUtil.loadConfig(getActivity());
         }
 
         return view;

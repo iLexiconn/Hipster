@@ -2,24 +2,25 @@ package net.ilexiconn.hipster;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import net.ilexiconn.hipster.config.Config;
+import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.util.ColorUtil;
+import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.magister.ParcelableMagister;
 import net.ilexiconn.magister.container.School;
 
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
-    private SharedPreferences preferences;
+    private Config config;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,16 +28,17 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int color = preferences.getInt("color", -16738597);
+        config = ConfigUtil.loadConfig(this);
+        int color = config.color;
         findViewById(R.id.login_toolbar).setBackgroundColor(color);
         ((ImageView) findViewById(R.id.login_icon)).setColorFilter(color);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
         }
 
-        if (preferences.getBoolean("loggedIn", false)) {
-            new LoginThread().execute(preferences.getString("school", "").replaceAll(" ", "%20"), preferences.getString("username", ""), preferences.getString("password", ""));
+        User user = config.getCurrentUser();
+        if (user != null) {
+            new LoginThread().execute(user.school.replaceAll(" ", "%20"), user.username, user.password);
         }
 
         Button buttonLogin = (Button) findViewById(R.id.button_login);
@@ -107,12 +109,12 @@ public class LoginActivity extends AppCompatActivity {
                 buttonLogin.setEnabled(true);
                 textPassword.setError(getString(R.string.invalid_password));
             } else {
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("loggedIn", true);
-                editor.putString("school", magister.school.name);
-                editor.putString("username", magister.user.username);
-                editor.putString("password", magister.user.password);
-                editor.apply();
+                if (config.getUser(magister.user.username) == null) {
+                    User user = new User(magister.school.name, magister.user.username, magister.user.password, magister.profile.id);
+                    config.users.add(user);
+                    config.currentUser = user.username;
+                    ConfigUtil.saveConfig(LoginActivity.this, config);
+                }
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("magister", magister);
                 startActivity(intent);

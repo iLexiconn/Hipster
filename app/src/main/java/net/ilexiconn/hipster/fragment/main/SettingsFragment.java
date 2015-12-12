@@ -1,8 +1,6 @@
 package net.ilexiconn.hipster.fragment.main;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -10,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import net.ilexiconn.hipster.R;
+import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.pager.SettingsPagerAdapter;
+import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class SettingsFragment extends PreferenceFragment {
     private View view;
@@ -30,8 +30,8 @@ public class SettingsFragment extends PreferenceFragment {
             tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
         }
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int color = preferences.getInt("color", -16738597);
+        Config config = ConfigUtil.loadConfig(getActivity());
+        int color = config.color;
         tabLayout.setBackgroundColor(color);
         tabLayout.setSelectedTabIndicatorColor(color);
 

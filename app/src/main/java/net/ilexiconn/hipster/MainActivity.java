@@ -4,12 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -22,8 +20,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.ilexiconn.hipster.broadcast.HipsterBroadcastReceiver;
+import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.Fragments;
 import net.ilexiconn.hipster.util.ColorUtil;
+import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.ParcelableMagister;
 
@@ -31,13 +31,13 @@ import java.io.*;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ParcelableMagister magister;
-    private SharedPreferences preferences;
+    private Config config;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        config = ConfigUtil.loadConfig(this);
 
         magister = getIntent().getParcelableExtra("magister");
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        int color = preferences.getInt("color", -16738597);
+        int color = config.color;
         findViewById(R.id.toolbar).setBackgroundColor(color);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int color = preferences.getInt("color", -16738597);
+        int color = config.color;
         findViewById(R.id.menu_header).setBackgroundColor(color);
         new ImageThread().execute();
         return super.onCreateOptionsMenu(menu);
