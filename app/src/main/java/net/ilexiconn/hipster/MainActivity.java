@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public Bitmap doInBackground(Void... params) {
             try {
-                if (!new File(getFilesDir(), magister.profile.id + ".png").exists()) {
+                if (!new File(getFilesDir(), "img" + File.separator + magister.profile.id + ".png").exists()) {
                     return (Bitmap) magister.getImage(200, 200, true).getImage();
                 } else {
                     return null;
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 image = getCroppedBitmap(bitmap);
                 FileOutputStream out = null;
                 try {
-                    out = new FileOutputStream(new File(getFilesDir(), magister.profile.id + ".png"));
+                    out = new FileOutputStream(new File(getFilesDir(), "img" + File.separator + magister.profile.id + ".png"));
                     image.compress(Bitmap.CompressFormat.PNG, 0, out);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             } else {
                 try {
-                    image = BitmapFactory.decodeStream(new FileInputStream(new File(getFilesDir(), magister.profile.id + ".png")));
+                    image = BitmapFactory.decodeStream(new FileInputStream(new File(getFilesDir(), "img" + File.separator + magister.profile.id + ".png")));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     return;
