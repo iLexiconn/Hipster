@@ -27,6 +27,8 @@ import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.ParcelableMagister;
 
+import java.io.*;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ParcelableMagister magister;
     private SharedPreferences preferences;
@@ -130,7 +132,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public Bitmap doInBackground(Void... params) {
             try {
-                return (Bitmap) magister.getImage(200, 200, true).getImage();
+                if (!new File(getFilesDir(), magister.profile.id + ".png").exists()) {
+                    return (Bitmap) magister.getImage(200, 200, true).getImage();
+                } else {
+                    return null;
+                }
             } catch (Exception e) {
                 return null;
             }
@@ -141,8 +147,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Bitmap image;
             if (bitmap != null) {
                 image = getCroppedBitmap(bitmap);
+                FileOutputStream out = null;
+                try {
+                    out = new FileOutputStream(new File(getFilesDir(), magister.profile.id + ".png"));
+                    image.compress(Bitmap.CompressFormat.PNG, 0, out);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (out != null) {
+                            out.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             } else {
-                image = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+                try {
+                    image = BitmapFactory.decodeStream(new FileInputStream(new File(getFilesDir(), magister.profile.id + ".png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    return;
+                }
             }
             ImageView profilePicture = (ImageView) findViewById(R.id.profile_picture);
             profilePicture.setImageBitmap(image);
