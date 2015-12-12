@@ -82,6 +82,7 @@ public class RecentGradesTabFragment extends Fragment {
                 List<Item> itemList = new ArrayList<>();
                 for (Grade grade : grades) {
                     String string1 = grade.course.name;
+                    string1 = string1.substring(0,1).toUpperCase() + string1.substring(1).toLowerCase();
                     String string2 = grade.grade;
                     String string3 = grade.filledInBy;
                     String string4 = prettyTime.format(grade.filledInDate);
