@@ -131,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public class ImageThread extends AsyncTask<Void, Void, Bitmap> {
         @Override
         public Bitmap doInBackground(Void... params) {
+            File saveDir = new File(getFilesDir(), "img");
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
             try {
                 if (!new File(getFilesDir(), "img" + File.separator + magister.profile.id + ".png").exists()) {
                     return (Bitmap) magister.getImage(200, 200, true).getImage();
@@ -144,12 +148,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         public void onPostExecute(Bitmap bitmap) {
+            File saveDir = new File(getFilesDir(), "img");
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
             Bitmap image;
             if (bitmap != null) {
                 image = getCroppedBitmap(bitmap);
                 FileOutputStream out = null;
                 try {
-                    out = new FileOutputStream(new File(getFilesDir(), "img" + File.separator + magister.profile.id + ".png"));
+                    out = new FileOutputStream(new File(saveDir, magister.profile.id + ".png"));
                     image.compress(Bitmap.CompressFormat.PNG, 0, out);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -164,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             } else {
                 try {
-                    image = BitmapFactory.decodeStream(new FileInputStream(new File(getFilesDir(), "img" + File.separator + magister.profile.id + ".png")));
+                    image = BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, magister.profile.id + ".png")));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     return;
