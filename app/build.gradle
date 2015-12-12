@@ -27,4 +27,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'
     compile 'com.pes.materialcolorpicker:library:1.0.2'
+    compile 'com.github.machinarius:preferencefragment:0.1.1'
 }

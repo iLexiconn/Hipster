@@ -1,7 +1,6 @@
 package net.ilexiconn.hipster;
 
 import android.app.AlarmManager;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragment == null) {
             return;
         }
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_main, fragment.getFragment());
         ImageView icon = (ImageView) findViewById(R.id.toolbar_icon);
         icon.setImageResource(fragment.getIcon());

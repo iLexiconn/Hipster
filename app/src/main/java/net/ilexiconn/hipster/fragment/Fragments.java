@@ -1,6 +1,6 @@
 package net.ilexiconn.hipster.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.main.DashboardFragment;
 import net.ilexiconn.hipster.fragment.main.GradesFragment;
