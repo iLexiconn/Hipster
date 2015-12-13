@@ -94,7 +94,7 @@ public class AppointmentsTabFragment extends TabFragment {
                 for (Appointment appointment : appointments) {
                     if (appointment.endDate.after(now)) {
                         String string1 = appointment.subjects.length > 0 ? appointment.subjects[0].name : "";
-                        string1 = string1.substring(0,1).toUpperCase() + string1.substring(1).toLowerCase();
+                        string1 = string1.substring(0, 1).toUpperCase() + string1.substring(1).toLowerCase();
                         String string2 = appointment.location;
                         String string3 = appointment.teachers.length > 0 ? appointment.teachers[0].abbreviation : "";
                         String string4 = format.format(appointment.startDate) + " - " + format.format(appointment.endDate);

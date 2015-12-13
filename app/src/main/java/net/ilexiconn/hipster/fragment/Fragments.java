@@ -22,6 +22,15 @@ public enum Fragments {
         this.icon = icon;
     }
 
+    public static Fragments getFragmentFromID(int id) {
+        for (Fragments fragments : values()) {
+            if (fragments.id == id) {
+                return fragments;
+            }
+        }
+        return null;
+    }
+
     public int getId() {
         return id;
     }
@@ -32,14 +41,5 @@ public enum Fragments {
 
     public int getIcon() {
         return icon;
-    }
-
-    public static Fragments getFragmentFromID(int id) {
-        for (Fragments fragments : values()) {
-            if (fragments.id == id) {
-                return fragments;
-            }
-        }
-        return null;
     }
 }

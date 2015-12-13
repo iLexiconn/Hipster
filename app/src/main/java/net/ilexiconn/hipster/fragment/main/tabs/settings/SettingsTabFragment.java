@@ -230,13 +230,13 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
     }
 
     @Override
-    public void setForcedRefresh(boolean forcedRefresh) {
-
+    public boolean getForcedRefresh() {
+        return false;
     }
 
     @Override
-    public boolean getForcedRefresh() {
-        return false;
+    public void setForcedRefresh(boolean forcedRefresh) {
+
     }
 
     @Override

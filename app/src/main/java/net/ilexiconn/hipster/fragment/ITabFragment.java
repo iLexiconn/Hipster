@@ -9,9 +9,9 @@ public interface ITabFragment {
 
     void refresh(Magister magister);
 
-    void setForcedRefresh(boolean forcedRefresh);
-
     boolean getForcedRefresh();
+
+    void setForcedRefresh(boolean forcedRefresh);
 
     Fragment getFragment();
 

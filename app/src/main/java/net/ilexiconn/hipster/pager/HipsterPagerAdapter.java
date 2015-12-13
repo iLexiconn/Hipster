@@ -2,7 +2,6 @@ package net.ilexiconn.hipster.pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import net.ilexiconn.hipster.fragment.IFragment;
 import net.ilexiconn.hipster.fragment.ITabFragment;
 

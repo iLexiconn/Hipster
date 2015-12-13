@@ -17,13 +17,13 @@ public abstract class TabFragment extends Fragment implements ITabFragment {
     }
 
     @Override
-    public void setForcedRefresh(boolean forcedRefresh) {
-        this.forcedRefresh = forcedRefresh;
+    public boolean getForcedRefresh() {
+        return forcedRefresh;
     }
 
     @Override
-    public boolean getForcedRefresh() {
-        return forcedRefresh;
+    public void setForcedRefresh(boolean forcedRefresh) {
+        this.forcedRefresh = forcedRefresh;
     }
 
     @Override

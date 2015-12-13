@@ -49,6 +49,14 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
         this(activity, user.school, user.username, user.password);
     }
 
+    public static boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public static Magister getMagister() {
+        return magister;
+    }
+
     @Override
     protected void onPreExecute() {
         dialog = ProgressDialog.show(activity, activity.getString(R.string.app_name), "Logging in...", true);
@@ -117,13 +125,5 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
             Snackbar.make(activity.getCurrentFocus(), error, Snackbar.LENGTH_LONG).show();
         }
         dialog.dismiss();
-    }
-
-    public static boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public static Magister getMagister() {
-        return magister;
     }
 }

@@ -95,7 +95,7 @@ public class RecentGradesTabFragment extends TabFragment {
                 List<Item> itemList = new ArrayList<>();
                 for (Grade grade : grades) {
                     String string1 = grade.subject.name;
-                    string1 = string1.substring(0,1).toUpperCase() + string1.substring(1).toLowerCase();
+                    string1 = string1.substring(0, 1).toUpperCase() + string1.substring(1).toLowerCase();
                     String string2 = grade.grade == null ? "???" : grade.grade;
                     String string3 = grade.filledInBy == null ? "???" : grade.filledInBy;
                     String string4 = prettyTime.format(grade.filledInDate);
