@@ -36,18 +36,11 @@ public class AppointmentsTabFragment extends TabFragment {
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (LoginThread.isLoggedIn()) {
-                        refresh(LoginThread.getMagister());
-                    }
+                    refresh(LoginThread.getMagister());
                 }
             });
 
-            if (LoginThread.isLoggedIn()) {
-                refresh(LoginThread.getMagister());
-            } else {
-                LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.appointments_container);
-                populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item("Inloggen kan via 'Instellingen -> Voeg account toe'")))));
-            }
+            refresh(LoginThread.getMagister());
         }
 
         return view;
@@ -67,6 +60,11 @@ public class AppointmentsTabFragment extends TabFragment {
 
     @Override
     public void refresh(Magister magister) {
+        if (magister == null) {
+            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.appointments_container);
+            populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item("Inloggen kan via 'Instellingen -> Voeg account toe'")))));
+            return;
+        }
         swipeRefresh.setRefreshing(true);
         new AppointmentThread().execute();
     }
