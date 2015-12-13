@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         config = ConfigUtil.loadConfig(this);
 
         User currentUser = config.getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser != null && (!LoginThread.isLoggedIn() || LoginThread.getMagister().isExpired())) {
             new LoginThread(this, currentUser).execute();
         }
 
