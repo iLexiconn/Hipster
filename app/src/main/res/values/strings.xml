@@ -27,5 +27,6 @@
     <string name="set_account">Verander account</string>
     <string name="unknown_error">Onbekende fout</string>
     <string name="logged_off">Nog niet ingelogd! Je kan dit doen in het Instellingen menu.</string>
+    <string name="back">Terug</string>
 
 </resources>

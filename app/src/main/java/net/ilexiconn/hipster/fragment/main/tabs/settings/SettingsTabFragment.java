@@ -51,9 +51,10 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
 
                     if (!arrayAdapter.isEmpty()) {
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-                        dialogBuilder.setTitle(R.string.app_name);
+                        dialogBuilder.setTitle(R.string.login);
+                        dialogBuilder.setCancelable(false);
 
-                        dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                        dialogBuilder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -99,7 +100,8 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-                dialogBuilder.setTitle(R.string.app_name);
+                dialogBuilder.setTitle(R.string.login);
+                dialogBuilder.setCancelable(false);
 
                 final Config config = ConfigUtil.loadConfig(getActivity());
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
@@ -108,7 +110,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                     arrayAdapter.add(user.nickname);
                 }
 
-                dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -146,7 +148,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                 View dialogView = layoutInflater.inflate(R.layout.dialog_login, null);
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-                dialogBuilder.setTitle(R.string.app_name);
+                dialogBuilder.setTitle(R.string.login);
                 dialogBuilder.setView(dialogView);
                 dialogBuilder.setCancelable(false);
 
@@ -154,13 +156,13 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                 final EditText username = (EditText) dialogView.findViewById(R.id.input_username);
                 final EditText password = (EditText) dialogView.findViewById(R.id.input_password);
 
-                dialogBuilder.setPositiveButton("login", new DialogInterface.OnClickListener() {
+                dialogBuilder.setPositiveButton(R.string.login, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         new LoginThread(getActivity(), school.getText().toString(), username.getText().toString(), password.getText().toString()).execute();
                     }
                 });
 
-                dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
