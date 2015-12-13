@@ -15,14 +15,16 @@ import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.School;
+import net.ilexiconn.magister.util.HttpUtil;
+import net.ilexiconn.magister.util.SchoolUrl;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 
 public class LoginThread extends AsyncTask<Void, Void, Magister> {
-    private static boolean loggedIn = false;
-    private static Magister magister;
+    static boolean loggedIn = false;
+    static Magister magister;
 
     public FragmentActivity activity;
     public String school;
@@ -55,7 +57,11 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
     @Override
     protected Magister doInBackground(Void... params) {
         try {
-            return Magister.login(School.findSchool(school.replaceAll(" ", "%20"))[0], username, password);
+            School s = School.findSchool(school.replaceAll(" ", "%20"))[0];
+            SchoolUrl url = new SchoolUrl(s);
+            HttpUtil.httpDelete(url.getCurrentSessionUrl());
+            Thread.sleep(1000); //Workaround for magister login error
+            return Magister.login(s, username, password);
         } catch (IOException e) {
             Log.e("HIPSTER", "Unable to login", e);
             error = activity.getString(R.string.no_internet);
@@ -67,6 +73,10 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
         } catch (InvalidParameterException e) {
             Log.e("HIPSTER", "Invalid credentials", e);
             error = activity.getString(R.string.invalid_password);
+            return null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            error = activity.getString(R.string.unknown_error);
             return null;
         }
     }
@@ -101,6 +111,7 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
                     fragmentTab.setForcedRefresh(true);
                 }
             }
+            Snackbar.make(activity.getCurrentFocus(), "Ingelogd", Snackbar.LENGTH_LONG).show();
         } else {
             Log.e("HIPSTER", error);
             Snackbar.make(activity.getCurrentFocus(), error, Snackbar.LENGTH_LONG).show();
