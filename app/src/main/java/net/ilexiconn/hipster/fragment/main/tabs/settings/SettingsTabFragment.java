@@ -28,7 +28,6 @@ import net.ilexiconn.magister.Magister;
 
 public class SettingsTabFragment extends PreferenceFragment implements ITabFragment {
     private View view;
-    private Config config;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,14 +39,20 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (LoginThread.isLoggedIn()) {
+                    final Config config = ConfigUtil.loadConfig(getActivity());
+                    final User oldUser = config.getCurrentUser();
                     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
 
                     for (User user : config.users) {
-                        arrayAdapter.add(user.nickname);
+                        if (user != oldUser) {
+                            arrayAdapter.add(user.nickname);
+                        }
                     }
 
                     if (!arrayAdapter.isEmpty()) {
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                        dialogBuilder.setTitle(R.string.app_name);
+
                         dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -59,7 +64,6 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                             @Override
                             public void onClick(DialogInterface dialog, final int which) {
                                 if (which != -1) {
-                                    User oldUser = config.getCurrentUser();
                                     User newUser = config.getUser(new IMatcher<User>() {
                                         @Override
                                         public boolean matches(User object) {
@@ -97,6 +101,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
                 dialogBuilder.setTitle(R.string.app_name);
 
+                final Config config = ConfigUtil.loadConfig(getActivity());
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
 
                 for (User user : config.users) {
@@ -171,6 +176,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
         color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                final Config config = ConfigUtil.loadConfig(getActivity());
                 int color = config.color;
                 int r = (color >> 16) & 0xFF;
                 int g = (color >> 8) & 0xFF;
@@ -208,8 +214,6 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.tab_settings_settings, container, false);
-
-            config = ConfigUtil.loadConfig(getActivity());
         }
 
         return view;
