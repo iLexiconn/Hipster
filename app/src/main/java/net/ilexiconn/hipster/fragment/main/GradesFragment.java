@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.IFragment;
@@ -24,17 +25,14 @@ public class GradesFragment extends Fragment implements IFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TabLayout tabLayout;
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_main_grades, container, false);
 
-            ViewPager viewPager = (ViewPager) view.findViewById(R.id.grades_view);
-            viewPager.setAdapter(new HipsterPagerAdapter(this));
+        view = inflater.inflate(R.layout.fragment_main_grades, container, false);
 
-            tabLayout = (TabLayout) view.findViewById(R.id.grades_tabs);
-            tabLayout.setupWithViewPager(viewPager);
-        } else {
-            tabLayout = (TabLayout) view.findViewById(R.id.grades_tabs);
-        }
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.grades_view);
+        viewPager.setAdapter(new HipsterPagerAdapter(this));
+
+        tabLayout = (TabLayout) view.findViewById(R.id.grades_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         Config config = ConfigUtil.loadConfig(getActivity());
         int color = config.color;
