@@ -1,8 +1,6 @@
 package net.ilexiconn.hipster.fragment.main.tabs.settings;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -13,17 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
-import net.ilexiconn.hipster.LoginActivity;
-import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
+import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
-
-import java.io.IOException;
+import net.ilexiconn.hipster.util.IMatcher;
 
 public class SettingsTabFragment extends PreferenceFragment {
     private View view;
@@ -38,13 +35,7 @@ public class SettingsTabFragment extends PreferenceFragment {
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                new LogoutThread().execute();
-                config.users.remove(config.getCurrentUser());
-                config.currentUser = null;
-                ConfigUtil.saveConfig(getActivity(), config);
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                //logout
                 return true;
             }
         });
@@ -54,8 +45,6 @@ public class SettingsTabFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
-                builderSingle.setIcon(R.drawable.ic_people_black_24dp);
-                builderSingle.setTitle("Verander account");
 
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
 
@@ -72,17 +61,22 @@ public class SettingsTabFragment extends PreferenceFragment {
 
                 builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, final int which) {
                         if (which != -1) {
-                            User user = config.getUserByName(arrayAdapter.getItem(which));
+                            User user = config.getUser(new IMatcher<User>() {
+                                @Override
+                                public boolean matches(User object) {
+                                    return object.nickname.equals(arrayAdapter.getItem(which));
+                                }
+                            });
                             config.currentUser = user.username;
                             ConfigUtil.saveConfig(getActivity(), config);
-                            Intent intent = new Intent(getActivity(), LoginActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
+
+                            new LoginThread(getActivity(), user);
                         }
                     }
                 });
+
                 builderSingle.show();
 
                 return true;
@@ -93,11 +87,31 @@ public class SettingsTabFragment extends PreferenceFragment {
         addAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                config.currentUser = null;
-                ConfigUtil.saveConfig(getActivity(), config);
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+
+                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+                View dialogView = layoutInflater.inflate(R.layout.dialog_login, null);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.setCancelable(false);
+
+                final EditText school = (EditText) dialogView.findViewById(R.id.input_school);
+                final EditText username = (EditText) dialogView.findViewById(R.id.input_username);
+                final EditText password = (EditText) dialogView.findViewById(R.id.input_password);
+
+                dialogBuilder.setPositiveButton("login", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new LoginThread(getActivity(), school.getText().toString(), username.getText().toString(), password.getText().toString());
+                    }
+                });
+
+                dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialogBuilder.create().show();
+
                 return true;
             }
         });
@@ -148,17 +162,5 @@ public class SettingsTabFragment extends PreferenceFragment {
         }
 
         return view;
-    }
-
-    public class LogoutThread extends AsyncTask<Void, Void, Void> {
-        @Override
-        public Void doInBackground(Void... params) {
-            try {
-                ((MainActivity) getActivity()).getMagister().logout();
-            } catch (IOException e) {
-
-            }
-            return null;
-        }
     }
 }

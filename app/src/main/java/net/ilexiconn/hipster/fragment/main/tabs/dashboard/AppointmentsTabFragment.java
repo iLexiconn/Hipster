@@ -2,7 +2,6 @@ package net.ilexiconn.hipster.fragment.main.tabs.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -10,19 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
-import net.ilexiconn.hipster.item.Item;
-import net.ilexiconn.hipster.item.ItemAdapter;
 import net.ilexiconn.magister.container.Appointment;
-import net.ilexiconn.magister.handler.AppointmentHandler;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class AppointmentsTabFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
@@ -68,17 +56,18 @@ public class AppointmentsTabFragment extends Fragment {
     public class AppointmentThread extends AsyncTask<Void, Void, Appointment[]> {
         @Override
         public Appointment[] doInBackground(Void... params) {
-            AppointmentHandler appointmentHandler = ((MainActivity) getActivity()).getMagister().getHandler(AppointmentHandler.class);
+            /*AppointmentHandler appointmentHandler = ((MainActivity) getActivity()).getMagister().getHandler(AppointmentHandler.class);
             try {
                 return appointmentHandler.getAppointmentsOfToday();
             } catch (IOException e) {
                 return null;
-            }
+            }*/
+            return null;
         }
 
         @Override
         public void onPostExecute(Appointment[] appointments) {
-            if (appointments != null) {
+            /*if (appointments != null) {
                 Date now = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 List<Item> itemList = new ArrayList<>();
@@ -99,7 +88,7 @@ public class AppointmentsTabFragment extends Fragment {
                 populateLayout(todayLayout, new ItemAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_internet), Snackbar.LENGTH_LONG);
-            }
+            }*/
             swipeRefresh.setRefreshing(false);
         }
     }

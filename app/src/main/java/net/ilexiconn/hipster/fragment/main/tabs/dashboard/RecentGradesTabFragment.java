@@ -2,7 +2,6 @@ package net.ilexiconn.hipster.fragment.main.tabs.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -10,18 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
-import net.ilexiconn.hipster.item.Item;
-import net.ilexiconn.hipster.item.ItemAdapter;
 import net.ilexiconn.magister.container.Grade;
-import net.ilexiconn.magister.handler.GradeHandler;
-import org.ocpsoft.prettytime.PrettyTime;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class RecentGradesTabFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
@@ -67,17 +56,18 @@ public class RecentGradesTabFragment extends Fragment {
     public class GradeThread extends AsyncTask<Void, Void, Grade[]> {
         @Override
         public Grade[] doInBackground(Void... params) {
-            GradeHandler gradeHandler = ((MainActivity) getActivity()).getMagister().getHandler(GradeHandler.class);
+            /*GradeHandler gradeHandler = ((MainActivity) getActivity()).getMagister().getHandler(GradeHandler.class);
             try {
                 return gradeHandler.getRecentGrades();
             } catch (IOException e) {
                 return null;
-            }
+            }*/
+            return null;
         }
 
         @Override
         public void onPostExecute(Grade[] grades) {
-            if (grades != null) {
+            /*if (grades != null) {
                 PrettyTime prettyTime = new PrettyTime(new Locale("nl"));
                 List<Item> itemList = new ArrayList<>();
                 for (Grade grade : grades) {
@@ -95,7 +85,7 @@ public class RecentGradesTabFragment extends Fragment {
                 populateLayout(gradesLayout, new ItemAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_internet), Snackbar.LENGTH_LONG);
-            }
+            }*/
             swipeRefresh.setRefreshing(false);
         }
     }

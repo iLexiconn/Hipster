@@ -1,5 +1,7 @@
 package net.ilexiconn.hipster.config;
 
+import net.ilexiconn.hipster.util.IMatcher;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Config {
         return null;
     }
 
-    public User getUserByID(String username) {
+    public User getUser(String username) {
         if (username == null || username.isEmpty()) {
             return null;
         }
@@ -32,12 +34,12 @@ public class Config {
         return null;
     }
 
-    public User getUserByName(String nickname) {
-        if (nickname == null || nickname.isEmpty()) {
+    public User getUser(IMatcher<User> matcher) {
+        if (matcher == null) {
             return null;
         }
         for (User user : users) {
-            if (user.nickname.equals(nickname)) {
+            if (matcher.matches(user)) {
                 return user;
             }
         }

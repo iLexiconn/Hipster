@@ -25,5 +25,6 @@
     <string name="account">Account</string>
     <string name="add_account">Voeg account toe</string>
     <string name="set_account">Verander account</string>
+    <string name="unknown_error">Onbekende fout</string>
 
 </resources>

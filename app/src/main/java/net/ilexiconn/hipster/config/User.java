@@ -5,13 +5,11 @@ public class User {
     public final String username;
     public final String password;
     public final String nickname;
-    public final int id;
 
-    public User(String school, String username, String password, String nickname, int id) {
+    public User(String school, String username, String password, String nickname) {
         this.school = school;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.id = id;
     }
 }
