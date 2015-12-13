@@ -21,6 +21,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,15 +39,11 @@ public class RecentGradesTabFragment extends TabFragment {
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (LoginThread.isLoggedIn()) {
-                        refresh(LoginThread.getMagister());
-                    }
+                    refresh(LoginThread.getMagister());
                 }
             });
 
-            if (LoginThread.isLoggedIn()) {
-                refresh(LoginThread.getMagister());
-            }
+            refresh(LoginThread.getMagister());
         }
 
         return view;
@@ -66,6 +63,11 @@ public class RecentGradesTabFragment extends TabFragment {
 
     @Override
     public void refresh(Magister magister) {
+        if (magister == null) {
+            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.recent_grades_container);
+            populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
+            return;
+        }
         swipeRefresh.setRefreshing(true);
         new GradeThread().execute();
     }

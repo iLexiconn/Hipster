@@ -11,9 +11,7 @@ public abstract class TabFragment extends Fragment implements ITabFragment {
         if (getView() != null) {
             if (getForcedRefresh()) {
                 setForcedRefresh(false);
-                if (LoginThread.isLoggedIn()) {
-                    refresh(LoginThread.getMagister());
-                }
+                refresh(LoginThread.getMagister());
             }
         }
     }

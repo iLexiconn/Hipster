@@ -20,10 +20,7 @@ import net.ilexiconn.magister.handler.AppointmentHandler;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class AppointmentsTabFragment extends TabFragment {
     private SwipeRefreshLayout swipeRefresh;
@@ -39,15 +36,11 @@ public class AppointmentsTabFragment extends TabFragment {
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (LoginThread.isLoggedIn()) {
-                        refresh(LoginThread.getMagister());
-                    }
+                    refresh(LoginThread.getMagister());
                 }
             });
 
-            if (LoginThread.isLoggedIn()) {
-                refresh(LoginThread.getMagister());
-            }
+            refresh(LoginThread.getMagister());
         }
 
         return view;
@@ -67,6 +60,11 @@ public class AppointmentsTabFragment extends TabFragment {
 
     @Override
     public void refresh(Magister magister) {
+        if (magister == null) {
+            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.appointments_container);
+            populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
+            return;
+        }
         swipeRefresh.setRefreshing(true);
         new AppointmentThread().execute();
     }

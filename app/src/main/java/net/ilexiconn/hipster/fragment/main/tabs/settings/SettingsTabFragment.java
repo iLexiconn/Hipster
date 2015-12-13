@@ -20,6 +20,7 @@ import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.thread.LoginThread;
+import net.ilexiconn.hipster.thread.LogoutThread;
 import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.hipster.util.IMatcher;
@@ -27,7 +28,6 @@ import net.ilexiconn.magister.Magister;
 
 public class SettingsTabFragment extends PreferenceFragment implements ITabFragment {
     private View view;
-    private Config config;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,59 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                //logout
-                return true;
+                if (LoginThread.isLoggedIn()) {
+                    final Config config = ConfigUtil.loadConfig(getActivity());
+                    final User oldUser = config.getCurrentUser();
+                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
+
+                    for (User user : config.users) {
+                        if (user != oldUser) {
+                            arrayAdapter.add(user.nickname);
+                        }
+                    }
+
+                    if (!arrayAdapter.isEmpty()) {
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                        dialogBuilder.setTitle(R.string.app_name);
+
+                        dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        dialogBuilder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, final int which) {
+                                if (which != -1) {
+                                    User newUser = config.getUser(new IMatcher<User>() {
+                                        @Override
+                                        public boolean matches(User object) {
+                                            return object.nickname.equals(arrayAdapter.getItem(which));
+                                        }
+                                    });
+                                    config.currentUser = newUser.username;
+                                    config.users.remove(oldUser);
+                                    ConfigUtil.saveConfig(getActivity(), config);
+
+                                    new LoginThread(getActivity(), newUser).execute();
+                                }
+                            }
+                        });
+
+                        dialogBuilder.show();
+                    } else {
+                        config.users.clear();
+                        config.currentUser = null;
+                        ConfigUtil.saveConfig(getActivity(), config);
+
+                        new LogoutThread(getActivity()).execute();
+                    }
+
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -47,22 +98,24 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
         setAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                dialogBuilder.setTitle(R.string.app_name);
 
+                final Config config = ConfigUtil.loadConfig(getActivity());
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
 
                 for (User user : config.users) {
                     arrayAdapter.add(user.nickname);
                 }
 
-                builderSingle.setNegativeButton("terug", new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton("terug", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
 
-                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                dialogBuilder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
                         if (which != -1) {
@@ -80,7 +133,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                     }
                 });
 
-                builderSingle.show();
+                dialogBuilder.show();
 
                 return true;
             }
@@ -90,7 +143,6 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
         addAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                 View dialogView = layoutInflater.inflate(R.layout.dialog_login, null);
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
@@ -124,6 +176,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
         color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                final Config config = ConfigUtil.loadConfig(getActivity());
                 int color = config.color;
                 int r = (color >> 16) & 0xFF;
                 int g = (color >> 8) & 0xFF;
@@ -161,8 +214,6 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.tab_settings_settings, container, false);
-
-            config = ConfigUtil.loadConfig(getActivity());
         }
 
         return view;
