@@ -9,11 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
-import net.ilexiconn.hipster.pager.DashboardPagerAdapter;
+import net.ilexiconn.hipster.fragment.IFragment;
+import net.ilexiconn.hipster.fragment.ITabFragment;
+import net.ilexiconn.hipster.fragment.main.tabs.dashboard.AppointmentsTabFragment;
+import net.ilexiconn.hipster.fragment.main.tabs.dashboard.RecentGradesTabFragment;
+import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements IFragment {
     private View view;
+    private ITabFragment[] tabFragments = new ITabFragment[]{
+            new AppointmentsTabFragment(),
+            new RecentGradesTabFragment()
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,7 +30,7 @@ public class DashboardFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_main_dashboard, container, false);
 
             ViewPager viewPager = (ViewPager) view.findViewById(R.id.dashboard_view);
-            viewPager.setAdapter(new DashboardPagerAdapter(getActivity().getSupportFragmentManager(), getActivity()));
+            viewPager.setAdapter(new HipsterPagerAdapter(this));
 
             tabLayout = (TabLayout) view.findViewById(R.id.dashboard_tabs);
             tabLayout.setupWithViewPager(viewPager);
@@ -36,5 +44,15 @@ public class DashboardFragment extends Fragment {
         tabLayout.setSelectedTabIndicatorColor(color);
 
         return view;
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public ITabFragment[] getFragmentTabs() {
+        return tabFragments;
     }
 }

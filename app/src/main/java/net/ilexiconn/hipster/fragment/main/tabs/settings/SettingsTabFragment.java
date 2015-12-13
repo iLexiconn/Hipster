@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,14 @@ import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
+import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.hipster.util.IMatcher;
+import net.ilexiconn.magister.Magister;
 
-public class SettingsTabFragment extends PreferenceFragment {
+public class SettingsTabFragment extends PreferenceFragment implements ITabFragment {
     private View view;
     private Config config;
 
@@ -163,5 +166,35 @@ public class SettingsTabFragment extends PreferenceFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onReload() {
+
+    }
+
+    @Override
+    public void refresh(Magister magister) {
+
+    }
+
+    @Override
+    public void setForcedRefresh(boolean forcedRefresh) {
+
+    }
+
+    @Override
+    public boolean getForcedRefresh() {
+        return false;
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public int getTitle() {
+        return R.string.settings;
     }
 }

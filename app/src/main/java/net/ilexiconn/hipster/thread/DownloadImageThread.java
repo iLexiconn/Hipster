@@ -14,9 +14,9 @@ public class DownloadImageThread extends AsyncTask<Void, Void, Bitmap> {
     public Activity activity;
     public Magister magister;
 
-    public DownloadImageThread(Activity activity, Magister magister) {
+    public DownloadImageThread(Activity activity) {
         this.activity = activity;
-        this.magister = magister;
+        this.magister = LoginThread.getMagister();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package net.ilexiconn.hipster.fragment;
 
-import android.support.v4.app.Fragment;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.main.DashboardFragment;
 import net.ilexiconn.hipster.fragment.main.GradesFragment;
@@ -14,10 +13,10 @@ public enum Fragments {
     SETTINGS(R.id.nav_settings, new SettingsFragment(), R.drawable.ic_settings_black_24dp);
 
     private int id;
-    private Fragment fragment;
+    private IFragment fragment;
     private int icon;
 
-    Fragments(int id, Fragment fragment, int icon) {
+    Fragments(int id, IFragment fragment, int icon) {
         this.id = id;
         this.fragment = fragment;
         this.icon = icon;
@@ -27,7 +26,7 @@ public enum Fragments {
         return id;
     }
 
-    public Fragment getFragment() {
+    public IFragment getFragment() {
         return fragment;
     }
 

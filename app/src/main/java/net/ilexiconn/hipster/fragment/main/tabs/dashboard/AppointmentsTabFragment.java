@@ -2,7 +2,7 @@ package net.ilexiconn.hipster.fragment.main.tabs.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import net.ilexiconn.hipster.R;
+import net.ilexiconn.hipster.fragment.TabFragment;
+import net.ilexiconn.hipster.item.Item;
+import net.ilexiconn.hipster.item.ItemAdapter;
+import net.ilexiconn.hipster.thread.LoginThread;
+import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.Appointment;
+import net.ilexiconn.magister.handler.AppointmentHandler;
 
-public class AppointmentsTabFragment extends Fragment {
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class AppointmentsTabFragment extends TabFragment {
     private SwipeRefreshLayout swipeRefresh;
     private View view;
 
@@ -26,11 +39,15 @@ public class AppointmentsTabFragment extends Fragment {
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    refresh();
+                    if (LoginThread.isLoggedIn()) {
+                        refresh(LoginThread.getMagister());
+                    }
                 }
             });
 
-            refresh();
+            if (LoginThread.isLoggedIn()) {
+                refresh(LoginThread.getMagister());
+            }
         }
 
         return view;
@@ -48,32 +65,37 @@ public class AppointmentsTabFragment extends Fragment {
         }
     }
 
-    public void refresh() {
+    @Override
+    public void refresh(Magister magister) {
         swipeRefresh.setRefreshing(true);
         new AppointmentThread().execute();
+    }
+
+    @Override
+    public int getTitle() {
+        return R.string.today;
     }
 
     public class AppointmentThread extends AsyncTask<Void, Void, Appointment[]> {
         @Override
         public Appointment[] doInBackground(Void... params) {
-            /*AppointmentHandler appointmentHandler = ((MainActivity) getActivity()).getMagister().getHandler(AppointmentHandler.class);
+            AppointmentHandler appointmentHandler = LoginThread.getMagister().getHandler(AppointmentHandler.class);
             try {
                 return appointmentHandler.getAppointmentsOfToday();
             } catch (IOException e) {
                 return null;
-            }*/
-            return null;
+            }
         }
 
         @Override
         public void onPostExecute(Appointment[] appointments) {
-            /*if (appointments != null) {
+            if (appointments != null) {
                 Date now = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 List<Item> itemList = new ArrayList<>();
                 for (Appointment appointment : appointments) {
                     if (appointment.endDate.after(now)) {
-                        String string1 = appointment.courses.length > 0 ? appointment.courses[0].name : "";
+                        String string1 = appointment.subjects.length > 0 ? appointment.subjects[0].name : "";
                         string1 = string1.substring(0,1).toUpperCase() + string1.substring(1).toLowerCase();
                         String string2 = appointment.location;
                         String string3 = appointment.teachers.length > 0 ? appointment.teachers[0].abbreviation : "";
@@ -88,7 +110,7 @@ public class AppointmentsTabFragment extends Fragment {
                 populateLayout(todayLayout, new ItemAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_internet), Snackbar.LENGTH_LONG);
-            }*/
+            }
             swipeRefresh.setRefreshing(false);
         }
     }

@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.notification.HipsterNotification;
-import net.ilexiconn.magister.Magister;
+import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.magister.container.Grade;
 import net.ilexiconn.magister.handler.GradeHandler;
 
@@ -22,7 +22,6 @@ import java.util.List;
 
 public class HipsterBroadcastReceiver extends BroadcastReceiver {
     private NotificationManager notificationManager;
-    private Magister magister;
     private Context context;
     private PowerManager.WakeLock wakeLock;
 
@@ -30,14 +29,15 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "HIPSTER");
-        wakeLock.acquire();
+        if (LoginThread.isLoggedIn()) {
+            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "HIPSTER");
+            wakeLock.acquire();
 
-        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        magister = intent.getParcelableExtra("magister");
+            notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        new CheckGradesThread().execute();
+            new CheckGradesThread().execute();
+        }
     }
 
     public class CheckGradesThread extends AsyncTask<Void, Void, Grade[]> {
@@ -54,7 +54,7 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
                 calendar.add(Calendar.MINUTE, -15);
                 Date date = calendar.getTime();
                 List<Grade> gradeList = new ArrayList<>();
-                for (Grade grade : magister.getHandler(GradeHandler.class).getRecentGrades()) {
+                for (Grade grade : LoginThread.getMagister().getHandler(GradeHandler.class).getRecentGrades()) {
                     if (grade.filledInDate.after(date)) {
                         gradeList.add(grade);
                     }
