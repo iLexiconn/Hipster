@@ -29,6 +29,7 @@ import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class MainActivity extends AppCompatActivity {
     private Config config;
+    private Fragments currentFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,11 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
         }
 
-        setFragment(Fragments.DASHBOARD);
+        if (currentFragment == null) {
+            setFragment(Fragments.DASHBOARD);
+        } else {
+            setFragment(currentFragment);
+        }
     }
 
     @Override
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         transaction.commit();
+        currentFragment = fragment;
         for (ITabFragment tabFragment : fragment.getFragment().getFragmentTabs()) {
             tabFragment.onReload();
         }

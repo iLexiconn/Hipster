@@ -17,7 +17,6 @@ import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class SettingsFragment extends PreferenceFragment implements IFragment {
-    private View view;
     private ITabFragment[] tabFragments = new ITabFragment[]{
             new SettingsTabFragment()
     };
@@ -25,17 +24,13 @@ public class SettingsFragment extends PreferenceFragment implements IFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TabLayout tabLayout;
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_main_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_settings, container, false);
 
-            ViewPager viewPager = (ViewPager) view.findViewById(R.id.settings_view);
-            viewPager.setAdapter(new HipsterPagerAdapter(this));
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.settings_view);
+        viewPager.setAdapter(new HipsterPagerAdapter(this));
 
-            tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
-            tabLayout.setupWithViewPager(viewPager);
-        } else {
-            tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
-        }
+        tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         Config config = ConfigUtil.loadConfig(getActivity());
         int color = config.color;

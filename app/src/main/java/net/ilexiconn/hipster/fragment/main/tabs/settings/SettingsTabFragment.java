@@ -27,6 +27,7 @@ import net.ilexiconn.hipster.util.IMatcher;
 import net.ilexiconn.magister.Magister;
 
 public class SettingsTabFragment extends PreferenceFragment implements ITabFragment {
+    public View view;
 
     @Override
     public void onResume() {
@@ -213,7 +214,11 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab_settings_settings, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.tab_settings_settings, container, false);
+        }
+
+        return view;
     }
 
     @Override
