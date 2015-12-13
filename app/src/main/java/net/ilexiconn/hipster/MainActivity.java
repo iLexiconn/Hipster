@@ -14,10 +14,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import net.ilexiconn.hipster.broadcast.HipsterBroadcastReceiver;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
@@ -78,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("HIPSTER", "Creating options menu");
         int color = config.color;
         findViewById(R.id.menu_header).setBackgroundColor(color);
+        TextView profileName = (TextView) findViewById(R.id.profile_name);
+        profileName.setText("Niet ingelogd");
         return super.onCreateOptionsMenu(menu);
     }
 

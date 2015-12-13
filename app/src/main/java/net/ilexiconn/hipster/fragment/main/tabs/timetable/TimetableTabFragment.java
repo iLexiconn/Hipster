@@ -21,6 +21,7 @@ import net.ilexiconn.magister.handler.AppointmentHandler;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,6 +47,9 @@ public class TimetableTabFragment extends TabFragment {
 
             if (LoginThread.isLoggedIn()) {
                 refresh(LoginThread.getMagister());
+            } else {
+                LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.timetable_container);
+                populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item("Inloggen kan via 'Instellingen -> Voeg account toe'")))));
             }
         }
 
