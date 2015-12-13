@@ -27,11 +27,10 @@ import net.ilexiconn.hipster.util.IMatcher;
 import net.ilexiconn.magister.Magister;
 
 public class SettingsTabFragment extends PreferenceFragment implements ITabFragment {
-    private View view;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onResume() {
+        super.onResume();
 
         addPreferencesFromResource(R.xml.settings);
         Preference logout = findPreference(getString(R.string.logout));
@@ -214,11 +213,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.tab_settings_settings, container, false);
-        }
-
-        return view;
+        return inflater.inflate(R.layout.tab_settings_settings, container, false);
     }
 
     @Override
