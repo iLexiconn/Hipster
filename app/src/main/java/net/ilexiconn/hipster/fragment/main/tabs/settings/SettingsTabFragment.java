@@ -72,7 +72,7 @@ public class SettingsTabFragment extends PreferenceFragment {
                             config.currentUser = user.username;
                             ConfigUtil.saveConfig(getActivity(), config);
 
-                            new LoginThread(getActivity(), user);
+                            new LoginThread(getActivity(), user).execute();
                         }
                     }
                 });
@@ -91,6 +91,7 @@ public class SettingsTabFragment extends PreferenceFragment {
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                 View dialogView = layoutInflater.inflate(R.layout.dialog_login, null);
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                dialogBuilder.setTitle(R.string.app_name);
                 dialogBuilder.setView(dialogView);
                 dialogBuilder.setCancelable(false);
 
@@ -100,7 +101,7 @@ public class SettingsTabFragment extends PreferenceFragment {
 
                 dialogBuilder.setPositiveButton("login", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        new LoginThread(getActivity(), school.getText().toString(), username.getText().toString(), password.getText().toString());
+                        new LoginThread(getActivity(), school.getText().toString(), username.getText().toString(), password.getText().toString()).execute();
                     }
                 });
 

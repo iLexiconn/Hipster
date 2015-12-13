@@ -73,7 +73,7 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
             if (grades != null) {
                 Log.d("HIPSTER", "Found new grades, notifying user");
                 for (Grade grade : grades) {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context).setSmallIcon(R.drawable.ic_people_black_24dp).setContentTitle("Hipster").setContentText("Je hebt een " + grade.grade + " voor " + grade.course.name + " gekregen.");
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context).setSmallIcon(R.drawable.ic_people_black_24dp).setContentTitle("Hipster").setContentText("Je hebt een " + grade.grade + " voor " + grade.subject.name + " gekregen.");
                     notificationManager.notify(HipsterNotification.getUniqueID(), builder.build());
                 }
             } else {

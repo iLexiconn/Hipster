@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.fragment.Fragments;
+import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         User currentUser = config.getCurrentUser();
         if (currentUser != null) {
-            //new LoginThread(this, currentUser);
+            new LoginThread(this, currentUser).execute();
         }
 
         setContentView(R.layout.activity_main);
