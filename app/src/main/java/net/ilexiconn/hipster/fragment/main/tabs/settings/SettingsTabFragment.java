@@ -100,13 +100,17 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                final Config config = ConfigUtil.loadConfig(getActivity());
+                User oldUser = config.getCurrentUser();
                 dialogBuilder.setTitle(R.string.login);
                 dialogBuilder.setCancelable(false);
 
-                final Config config = ConfigUtil.loadConfig(getActivity());
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
 
                 for (User user : config.users) {
+                    if (user == oldUser) {
+                        continue;
+                    }
                     arrayAdapter.add(user.nickname);
                 }
 
