@@ -28,7 +28,7 @@ public class AppointmentsTabFragment extends TabFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
+        if (savedInstanceState == null) {
             view = inflater.inflate(R.layout.tab_dashboard_appointments, container, false);
 
             swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.tab_appointments);

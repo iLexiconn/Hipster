@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.TabFragment;
 import net.ilexiconn.hipster.item.Item;
@@ -31,7 +32,7 @@ public class TimetableTabFragment extends TabFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
+        if (savedInstanceState == null) {
             view = inflater.inflate(R.layout.tab_timetable_timetable, container, false);
 
             swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.tab_timetable);
@@ -96,10 +97,10 @@ public class TimetableTabFragment extends TabFragment {
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 List<Item> itemList = new ArrayList<>();
                 for (Appointment appointment : appointments) {
-                    String string1 = appointment.subjects.length > 0 ? appointment.subjects[0].name : "???";
+                    String string1 = appointment.subjects.length > 0 ? appointment.subjects[0].abbreviation == null ? "???" : appointment.subjects[0].abbreviation : "???";
                     string1 = string1.substring(0, 1).toUpperCase() + string1.substring(1).toLowerCase();
                     String string2 = appointment.location;
-                    String string3 = appointment.teachers.length > 0 ? appointment.teachers[0].abbreviation : "???";
+                    String string3 = appointment.teachers.length > 0 ? appointment.teachers[0].abbreviation == null ? "???" : appointment.teachers[0].abbreviation : "???";
                     String string4 = format.format(appointment.startDate) + " - " + format.format(appointment.endDate);
                     itemList.add(new Item(string1, string2, string3, string4));
                 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import net.ilexiconn.hipster.broadcast.HipsterBroadcastReceiver;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.fragment.Fragments;
+import net.ilexiconn.hipster.fragment.IFragment;
 import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.util.ColorUtil;
@@ -29,7 +31,6 @@ import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class MainActivity extends AppCompatActivity {
     private Config config;
-    private Fragments currentFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,11 +75,17 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
         }
 
-        if (currentFragment == null) {
+        if (savedInstanceState == null) {
             setFragment(Fragments.DASHBOARD);
         } else {
-            setFragment(currentFragment);
+            setFragment(Fragments.getFragmentFromID(savedInstanceState.getInt("fragmentID")));
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("fragmentID", Fragments.getIDFromFragment((IFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_main)));
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -111,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         transaction.commit();
-        currentFragment = fragment;
         for (ITabFragment tabFragment : fragment.getFragment().getFragmentTabs()) {
             tabFragment.onReload();
         }

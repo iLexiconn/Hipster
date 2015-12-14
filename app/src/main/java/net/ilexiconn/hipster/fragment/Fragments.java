@@ -31,6 +31,15 @@ public enum Fragments {
         return null;
     }
 
+    public static int getIDFromFragment(IFragment fragment) {
+        for (Fragments fragments : values()) {
+            if (fragments.getFragment().equals(fragment)) {
+                return fragments.getId();
+            }
+        }
+        return DASHBOARD.getId();
+    }
+
     public int getId() {
         return id;
     }
