@@ -30,8 +30,8 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
     public View view;
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
         Preference logout = findPreference(getString(R.string.logout));
