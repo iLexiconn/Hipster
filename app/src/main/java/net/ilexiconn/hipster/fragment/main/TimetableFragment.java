@@ -16,21 +16,18 @@ import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class TimetableFragment extends Fragment implements IFragment {
-    private View view;
     private ITabFragment[] tabFragments = new ITabFragment[]{
             new TimetableTabFragment()
     };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TabLayout tabLayout;
-
-        view = inflater.inflate(R.layout.fragment_main_timetable, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_timetable, container, false);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.timetable_view);
         viewPager.setAdapter(new HipsterPagerAdapter(this));
 
-        tabLayout = (TabLayout) view.findViewById(R.id.timetable_tabs);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.timetable_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         Config config = ConfigUtil.loadConfig(getActivity());

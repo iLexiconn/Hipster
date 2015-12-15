@@ -16,21 +16,18 @@ import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class GradesFragment extends Fragment implements IFragment {
-    private View view;
     private ITabFragment[] tabFragments = new ITabFragment[]{
             new GradesTabFragment()
     };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TabLayout tabLayout;
-
-        view = inflater.inflate(R.layout.fragment_main_grades, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_grades, container, false);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.grades_view);
         viewPager.setAdapter(new HipsterPagerAdapter(this));
 
-        tabLayout = (TabLayout) view.findViewById(R.id.grades_tabs);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.grades_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         Config config = ConfigUtil.loadConfig(getActivity());

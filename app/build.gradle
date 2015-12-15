@@ -22,7 +22,6 @@ android {
 dependencies {
     compile(project(':magister.java'))
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.code.gson:gson:2.5'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'

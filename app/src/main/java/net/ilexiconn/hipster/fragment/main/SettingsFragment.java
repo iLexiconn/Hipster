@@ -23,13 +23,12 @@ public class SettingsFragment extends PreferenceFragment implements IFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TabLayout tabLayout;
         View view = inflater.inflate(R.layout.fragment_main_settings, container, false);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.settings_view);
         viewPager.setAdapter(new HipsterPagerAdapter(this));
 
-        tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         Config config = ConfigUtil.loadConfig(getActivity());

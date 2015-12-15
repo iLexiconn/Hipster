@@ -8,22 +8,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.TabFragment;
 import net.ilexiconn.hipster.item.Item;
 import net.ilexiconn.hipster.item.ItemAdapter;
+import net.ilexiconn.hipster.item.grade.ItemGrade;
+import net.ilexiconn.hipster.item.grade.ItemGradeAdapter;
 import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.Grade;
+import net.ilexiconn.magister.container.Subject;
 import net.ilexiconn.magister.handler.GradeHandler;
-import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class GradesTabFragment extends TabFragment {
     private SwipeRefreshLayout swipeRefresh;
@@ -51,7 +51,7 @@ public class GradesTabFragment extends TabFragment {
         return view;
     }
 
-    public void populateLayout(LinearLayout layout, RecyclerView.Adapter adapter) {
+    public void populateLayout(RecyclerView layout, RecyclerView.Adapter adapter) {
         layout.removeAllViewsInLayout();
         int count = adapter.getItemCount();
 
@@ -66,7 +66,7 @@ public class GradesTabFragment extends TabFragment {
     @Override
     public void refresh(Magister magister) {
         if (magister == null) {
-            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.grades_container);
+            RecyclerView todayLayout = (RecyclerView) view.findViewById(R.id.grades_container);
             populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
             return;
         }
@@ -93,21 +93,24 @@ public class GradesTabFragment extends TabFragment {
         @Override
         public void onPostExecute(Grade[] grades) {
             if (grades != null) {
-                PrettyTime prettyTime = new PrettyTime(new Locale("nl"));
-                List<Item> itemList = new ArrayList<>();
+                List<ItemGrade> itemList = new ArrayList<>();
                 for (Grade grade : grades) {
-                    String string1 = grade.subject.name == null ? "???" : grade.subject.name;
-                    string1 = string1.substring(0, 1).toUpperCase() + string1.substring(1).toLowerCase();
-                    String string2 = grade.grade == null ? "???" : grade.grade;
-                    String string3 = grade.gradeRow == null ? "???" : grade.gradeRow.rowDiscription == null ? "???" : grade.gradeRow.rowDiscription;
-                    String string4 = grade.filledInDate == null ? "???" : prettyTime.format(grade.filledInDate);
-                    itemList.add(new Item(string1, string2, string3, string4));
+                    if (grade.grade == null) {
+                        continue;
+                    }
+                    String subject = grade.subject.abbreviation;
+                    for (Subject s : LoginThread.getMagister().subjects) {
+                        if (s.id == grade.subject.id) {
+                            subject = s.description;
+                        }
+                    }
+                    subject = subject.substring(0, 1).toUpperCase() + subject.substring(1);
+                    String lastGrade = "???";
+                    String averageGrade = grade.grade;
+                    itemList.add(new ItemGrade(subject, lastGrade, averageGrade));
                 }
-                if (itemList.isEmpty()) {
-                    itemList.add(new Item(getString(R.string.no_appointments)));
-                }
-                LinearLayout gradesLayout = (LinearLayout) view.findViewById(R.id.grades_container);
-                populateLayout(gradesLayout, new ItemAdapter(itemList));
+                RecyclerView gradesLayout = (RecyclerView) view.findViewById(R.id.grades_container);
+                populateLayout(gradesLayout, new ItemGradeAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_internet), Snackbar.LENGTH_LONG);
             }
