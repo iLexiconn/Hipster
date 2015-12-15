@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.TabFragment;
 import net.ilexiconn.hipster.item.Item;
@@ -51,7 +52,7 @@ public class GradesTabFragment extends TabFragment {
         return view;
     }
 
-    public void populateLayout(RecyclerView layout, RecyclerView.Adapter adapter) {
+    public void populateLayout(LinearLayout layout, RecyclerView.Adapter adapter) {
         layout.removeAllViewsInLayout();
         int count = adapter.getItemCount();
 
@@ -66,7 +67,7 @@ public class GradesTabFragment extends TabFragment {
     @Override
     public void refresh(Magister magister) {
         if (magister == null) {
-            RecyclerView todayLayout = (RecyclerView) view.findViewById(R.id.grades_container);
+            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.grades_container);
             populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
             return;
         }
@@ -109,7 +110,7 @@ public class GradesTabFragment extends TabFragment {
                     String averageGrade = grade.grade;
                     itemList.add(new ItemGrade(subject, lastGrade, averageGrade));
                 }
-                RecyclerView gradesLayout = (RecyclerView) view.findViewById(R.id.grades_container);
+                LinearLayout gradesLayout = (LinearLayout) view.findViewById(R.id.grades_container);
                 populateLayout(gradesLayout, new ItemGradeAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_internet), Snackbar.LENGTH_LONG);
