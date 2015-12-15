@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         int color = config.color;
         findViewById(R.id.menu_header).setBackgroundColor(color);
         TextView profileName = (TextView) findViewById(R.id.profile_name);
-        profileName.setText("Niet ingelogd");
+        profileName.setText(R.string.not_logged_in);
         return super.onCreateOptionsMenu(menu);
     }
 
