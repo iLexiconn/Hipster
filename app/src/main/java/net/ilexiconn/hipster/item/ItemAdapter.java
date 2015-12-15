@@ -1,5 +1,6 @@
 package net.ilexiconn.hipster.item;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ public class ItemAdapter extends Adapter<ItemHolder> {
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
         Item row = itemList.get(position);
-        holder.itemView.setBackgroundColor(row.color);
+        holder.string2.setTextColor(Color.parseColor(row.color));
         holder.string1.setText(row.string1);
         holder.string2.setText(row.string2);
         holder.string3.setText(row.string3);
