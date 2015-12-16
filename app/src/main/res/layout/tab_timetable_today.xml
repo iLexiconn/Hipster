@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/tab_timetable"
+        android:id="@+id/tab_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         xmlns:android="http://schemas.android.com/apk/res/android">
@@ -12,7 +12,7 @@
 
         <LinearLayout
                 android:orientation="vertical"
-                android:id="@+id/timetable_container"
+                android:id="@+id/today_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

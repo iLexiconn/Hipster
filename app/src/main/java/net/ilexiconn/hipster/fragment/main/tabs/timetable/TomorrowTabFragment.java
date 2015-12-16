@@ -20,21 +20,18 @@ import net.ilexiconn.magister.handler.AppointmentHandler;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-public class TimetableTabFragment extends TabFragment {
+public class TomorrowTabFragment extends TabFragment {
     private SwipeRefreshLayout swipeRefresh;
     private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            view = inflater.inflate(R.layout.tab_timetable_timetable, container, false);
+            view = inflater.inflate(R.layout.tab_timetable_tomorrow, container, false);
 
-            swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.tab_timetable);
+            swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.tab_tomorrow);
             swipeRefresh.setColorSchemeResources(R.color.primary);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -66,7 +63,7 @@ public class TimetableTabFragment extends TabFragment {
     @Override
     public void refresh(Magister magister) {
         if (magister == null) {
-            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.timetable_container);
+            LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.tomorrow_container);
             populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
             return;
         }
@@ -76,15 +73,23 @@ public class TimetableTabFragment extends TabFragment {
 
     @Override
     public int getTitle() {
-        return R.string.timetable;
+        return R.string.tomorrow;
     }
 
     public class AppointmentThread extends AsyncTask<Void, Void, Appointment[]> {
         @Override
         public Appointment[] doInBackground(Void... params) {
             AppointmentHandler appointmentHandler = LoginThread.getMagister().getHandler(AppointmentHandler.class);
+            Calendar date = new GregorianCalendar();
+            date.set(Calendar.HOUR_OF_DAY, 0);
+            date.set(Calendar.MINUTE, 0);
+            date.set(Calendar.SECOND, 0);
+            date.set(Calendar.MILLISECOND, 0);
+            date.add(Calendar.DAY_OF_WEEK, 1);
+            Date tomorrow = date.getTime();
+
             try {
-                return appointmentHandler.getAppointmentsOfToday();
+                return appointmentHandler.getAppointments(tomorrow, tomorrow);
             } catch (IOException e) {
                 return null;
             }
@@ -111,7 +116,7 @@ public class TimetableTabFragment extends TabFragment {
                 if (itemList.isEmpty()) {
                     itemList.add(new Item(getString(R.string.no_appointments)));
                 }
-                LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.timetable_container);
+                LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.tomorrow_container);
                 populateLayout(todayLayout, new ItemAdapter(itemList));
             } else {
                 Snackbar.make(view, getString(R.string.no_internet), Snackbar.LENGTH_LONG);

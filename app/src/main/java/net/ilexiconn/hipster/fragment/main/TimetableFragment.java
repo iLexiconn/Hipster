@@ -11,13 +11,15 @@ import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.IFragment;
 import net.ilexiconn.hipster.fragment.ITabFragment;
-import net.ilexiconn.hipster.fragment.main.tabs.timetable.TimetableTabFragment;
+import net.ilexiconn.hipster.fragment.main.tabs.timetable.TodayTabFragment;
+import net.ilexiconn.hipster.fragment.main.tabs.timetable.TomorrowTabFragment;
 import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
 import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class TimetableFragment extends Fragment implements IFragment {
     private ITabFragment[] tabFragments = new ITabFragment[]{
-            new TimetableTabFragment()
+            new TodayTabFragment(),
+            new TomorrowTabFragment()
     };
 
     @Override
