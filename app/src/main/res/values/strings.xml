@@ -6,7 +6,7 @@
     <string name="today">Vandaag</string>
     <string name="tomorrow">Morgen</string>
     <string name="recent_grades">Laatste Cijfers</string>
-    <string name="login">Login</string>
+    <string name="login">Inloggen</string>
     <string name="dashboard">Dashboard</string>
     <string name="grades">Cijfers</string>
     <string name="timetable">Rooster</string>
@@ -17,17 +17,17 @@
     <string name="password">Wachtwoord</string>
     <string name="invalid_school">Voer een geldige school in</string>
     <string name="invalid_password">Fout wachtwoord</string>
-    <string name="profile_picture">Profiel Foto</string>
+    <string name="profile_picture">Profielfoto</string>
     <string name="logout">Uitloggen</string>
     <string name="no_internet">Geen internet</string>
     <string name="no_appointments">Helemaal niks!</string>
     <string name="color">Kleur</string>
-    <string name="user_interface">Gebruikers Interface</string>
+    <string name="user_interface">Gebruikersinterface</string>
     <string name="account">Account</string>
     <string name="add_account">Voeg account toe</string>
-    <string name="set_account">Verander account</string>
+    <string name="set_account">Verander van account</string>
     <string name="unknown_error">Onbekende fout</string>
-    <string name="logged_off">Nog niet ingelogd! Je kan dit doen in het Instellingen menu.</string>
+    <string name="logged_off">Nog niet ingelogd! Je kan dit doen in het Instellingenmenu.</string>
     <string name="back">Terug</string>
     <string name="not_logged_in">Niet ingelogd</string>
 
