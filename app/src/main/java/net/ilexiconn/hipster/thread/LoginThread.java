@@ -1,6 +1,5 @@
 package net.ilexiconn.hipster.thread;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -34,7 +33,7 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
     public Config config;
     public String error;
 
-    public ProgressDialog dialog;
+    //public ProgressDialog dialog;
 
     public LoginThread(FragmentActivity activity, String school, String username, String password) {
         this.activity = activity;
@@ -59,7 +58,7 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
 
     @Override
     protected void onPreExecute() {
-        dialog = ProgressDialog.show(activity, activity.getString(R.string.app_name), "Logging in...", true);
+        //dialog = ProgressDialog.show(activity, activity.getString(R.string.app_name), "Logging in...", true);
     }
 
     @Override
@@ -124,6 +123,6 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
             Log.e("HIPSTER", error);
             Snackbar.make(activity.getCurrentFocus(), error, Snackbar.LENGTH_LONG).show();
         }
-        dialog.dismiss();
+        //dialog.dismiss();
     }
 }
