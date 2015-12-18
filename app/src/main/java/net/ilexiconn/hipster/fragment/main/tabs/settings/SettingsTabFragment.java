@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
@@ -38,7 +39,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if (LoginThread.isLoggedIn()) {
+                if (MainActivity.isLoggedIn()) {
                     final Config config = ConfigUtil.loadConfig(getActivity());
                     final User oldUser = config.getCurrentUser();
                     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item);
@@ -75,7 +76,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                                     config.users.remove(oldUser);
                                     ConfigUtil.saveConfig(getActivity(), config);
 
-                                    new LoginThread(getActivity(), newUser).execute();
+                                    new LoginThread((MainActivity) getActivity(), newUser).execute();
                                 }
                             }
                         });
@@ -86,7 +87,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                         config.currentUser = null;
                         ConfigUtil.saveConfig(getActivity(), config);
 
-                        new LogoutThread(getActivity()).execute();
+                        new LogoutThread((MainActivity) getActivity()).execute();
                     }
 
                     return true;
@@ -134,7 +135,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                             config.currentUser = user.username;
                             ConfigUtil.saveConfig(getActivity(), config);
 
-                            new LoginThread(getActivity(), user).execute();
+                            new LoginThread((MainActivity) getActivity(), user).execute();
                         }
                     }
                 });
@@ -162,7 +163,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
 
                 dialogBuilder.setPositiveButton(R.string.login, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        new LoginThread(getActivity(), school.getText().toString(), username.getText().toString(), password.getText().toString()).execute();
+                        new LoginThread((MainActivity) getActivity(), school.getText().toString(), username.getText().toString(), password.getText().toString()).execute();
                     }
                 });
 

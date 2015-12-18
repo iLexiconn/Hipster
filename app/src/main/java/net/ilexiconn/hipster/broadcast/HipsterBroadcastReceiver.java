@@ -8,9 +8,9 @@ import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.notification.HipsterNotification;
-import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.magister.container.Grade;
 import net.ilexiconn.magister.handler.GradeHandler;
 
@@ -29,7 +29,7 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
-        if (LoginThread.isLoggedIn()) {
+        if (MainActivity.isLoggedIn()) {
             PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "HIPSTER");
             wakeLock.acquire();
@@ -54,7 +54,7 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
                 calendar.add(Calendar.MINUTE, -15);
                 Date date = calendar.getTime();
                 List<Grade> gradeList = new ArrayList<>();
-                for (Grade grade : LoginThread.getMagister().getHandler(GradeHandler.class).getRecentGrades()) {
+                for (Grade grade : MainActivity.getMagister().getHandler(GradeHandler.class).getRecentGrades()) {
                     if (grade.filledInDate.after(date)) {
                         gradeList.add(grade);
                     }

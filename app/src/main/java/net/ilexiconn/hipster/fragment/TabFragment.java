@@ -1,7 +1,7 @@
 package net.ilexiconn.hipster.fragment;
 
 import android.support.v4.app.Fragment;
-import net.ilexiconn.hipster.thread.LoginThread;
+import net.ilexiconn.hipster.MainActivity;
 
 public abstract class TabFragment extends Fragment implements ITabFragment {
     private boolean forcedRefresh = false;
@@ -11,7 +11,7 @@ public abstract class TabFragment extends Fragment implements ITabFragment {
         if (getView() != null) {
             if (getForcedRefresh()) {
                 setForcedRefresh(false);
-                refresh(LoginThread.getMagister());
+                refresh(MainActivity.getMagister());
             }
         }
     }

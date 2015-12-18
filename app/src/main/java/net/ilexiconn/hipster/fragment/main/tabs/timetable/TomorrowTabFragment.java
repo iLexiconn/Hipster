@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.TabFragment;
 import net.ilexiconn.hipster.item.Item;
 import net.ilexiconn.hipster.item.ItemAdapter;
-import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.Appointment;
 import net.ilexiconn.magister.handler.AppointmentHandler;
@@ -36,13 +36,11 @@ public class TomorrowTabFragment extends TabFragment {
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (LoginThread.isLoggedIn()) {
-                        refresh(LoginThread.getMagister());
-                    }
+                    refresh(MainActivity.getMagister());
                 }
             });
 
-            refresh(LoginThread.getMagister());
+            refresh(MainActivity.getMagister());
         }
 
         return view;
@@ -79,7 +77,7 @@ public class TomorrowTabFragment extends TabFragment {
     public class AppointmentThread extends AsyncTask<Void, Void, Appointment[]> {
         @Override
         public Appointment[] doInBackground(Void... params) {
-            AppointmentHandler appointmentHandler = LoginThread.getMagister().getHandler(AppointmentHandler.class);
+            AppointmentHandler appointmentHandler = MainActivity.getMagister().getHandler(AppointmentHandler.class);
             Calendar date = new GregorianCalendar();
             date.set(Calendar.HOUR_OF_DAY, 0);
             date.set(Calendar.MINUTE, 0);

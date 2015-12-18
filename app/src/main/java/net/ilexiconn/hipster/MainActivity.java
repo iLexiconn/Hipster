@@ -27,9 +27,12 @@ import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
+import net.ilexiconn.magister.Magister;
 
 public class MainActivity extends AppCompatActivity {
     private Config config;
+
+    private static Magister magister;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         config = ConfigUtil.loadConfig(this);
 
         User currentUser = config.getCurrentUser();
-        if (currentUser != null && (!LoginThread.isLoggedIn() || LoginThread.getMagister().isExpired())) {
+        if (currentUser != null && (!isLoggedIn() || getMagister().isExpired())) {
             new LoginThread(this, currentUser).execute();
         }
 
@@ -120,5 +123,17 @@ public class MainActivity extends AppCompatActivity {
         for (ITabFragment tabFragment : fragment.getFragment().getFragmentTabs()) {
             tabFragment.onReload();
         }
+    }
+
+    public void setMagister(Magister magister) {
+        MainActivity.magister = magister;
+    }
+
+    public static boolean isLoggedIn() {
+        return magister != null;
+    }
+
+    public static Magister getMagister() {
+        return magister;
     }
 }

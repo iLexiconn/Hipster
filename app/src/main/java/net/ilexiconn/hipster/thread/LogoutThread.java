@@ -2,9 +2,9 @@ package net.ilexiconn.hipster.thread;
 
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.Fragments;
 import net.ilexiconn.hipster.fragment.ITabFragment;
@@ -12,19 +12,19 @@ import net.ilexiconn.hipster.fragment.ITabFragment;
 import java.io.IOException;
 
 public class LogoutThread extends AsyncTask<Void, Void, Boolean> {
-    public FragmentActivity activity;
+    public MainActivity activity;
 
     public String error;
 
-    public LogoutThread(FragmentActivity activity) {
+    public LogoutThread(MainActivity activity) {
         this.activity = activity;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        if (LoginThread.isLoggedIn()) {
+        if (MainActivity.isLoggedIn()) {
             try {
-                LoginThread.getMagister().logout();
+                MainActivity.getMagister().logout();
                 return true;
             } catch (IOException e) {
                 error = activity.getString(R.string.no_internet);
@@ -44,12 +44,11 @@ public class LogoutThread extends AsyncTask<Void, Void, Boolean> {
                     fragmentTab.setForcedRefresh(true);
                 }
             }
-            LoginThread.loggedIn = false;
-            LoginThread.magister = null;
+            activity.setMagister(null);
             ImageView profilePicture = (ImageView) activity.findViewById(R.id.profile_picture);
             profilePicture.setImageResource(0);
             TextView profileName = (TextView) activity.findViewById(R.id.profile_name);
-            profileName.setText("Niet ingelogd");
+            profileName.setText(R.string.not_logged_in);
             Snackbar.make(activity.getCurrentFocus(), "Uitgelogd", Snackbar.LENGTH_LONG).show();
         } else {
             Snackbar.make(activity.getCurrentFocus(), error, Snackbar.LENGTH_LONG).show();

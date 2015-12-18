@@ -9,13 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.TabFragment;
 import net.ilexiconn.hipster.item.Item;
 import net.ilexiconn.hipster.item.ItemAdapter;
 import net.ilexiconn.hipster.item.grade.ItemGrade;
 import net.ilexiconn.hipster.item.grade.ItemGradeAdapter;
-import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.Grade;
 import net.ilexiconn.magister.container.Subject;
@@ -40,13 +40,11 @@ public class GradesTabFragment extends TabFragment {
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (LoginThread.isLoggedIn()) {
-                        refresh(LoginThread.getMagister());
-                    }
+                    refresh(MainActivity.getMagister());
                 }
             });
 
-            refresh(LoginThread.getMagister());
+            refresh(MainActivity.getMagister());
         }
 
         return view;
@@ -83,7 +81,7 @@ public class GradesTabFragment extends TabFragment {
     public class GradeThread extends AsyncTask<Void, Void, Grade[]> {
         @Override
         public Grade[] doInBackground(Void... params) {
-            GradeHandler gradeHandler = LoginThread.getMagister().getHandler(GradeHandler.class);
+            GradeHandler gradeHandler = MainActivity.getMagister().getHandler(GradeHandler.class);
             try {
                 return gradeHandler.getGrades(true, false, true);
             } catch (IOException e) {
@@ -100,7 +98,7 @@ public class GradesTabFragment extends TabFragment {
                         continue;
                     }
                     String subject = grade.subject.abbreviation;
-                    for (Subject s : LoginThread.getMagister().subjects) {
+                    for (Subject s : MainActivity.getMagister().subjects) {
                         if (s.id == grade.subject.id) {
                             subject = s.description;
                         }

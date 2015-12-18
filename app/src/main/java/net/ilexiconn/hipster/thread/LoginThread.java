@@ -1,10 +1,11 @@
 package net.ilexiconn.hipster.thread;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
@@ -22,10 +23,7 @@ import java.security.InvalidParameterException;
 import java.text.ParseException;
 
 public class LoginThread extends AsyncTask<Void, Void, Magister> {
-    static boolean loggedIn = false;
-    static Magister magister;
-
-    public FragmentActivity activity;
+    public MainActivity activity;
     public String school;
     public String username;
     public String password;
@@ -33,9 +31,9 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
     public Config config;
     public String error;
 
-    //public ProgressDialog dialog;
+    public ProgressDialog dialog;
 
-    public LoginThread(FragmentActivity activity, String school, String username, String password) {
+    public LoginThread(MainActivity activity, String school, String username, String password) {
         this.activity = activity;
         this.school = school;
         this.username = username;
@@ -44,21 +42,13 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
         this.config = ConfigUtil.loadConfig(activity);
     }
 
-    public LoginThread(FragmentActivity activity, User user) {
+    public LoginThread(MainActivity activity, User user) {
         this(activity, user.school, user.username, user.password);
-    }
-
-    public static boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public static Magister getMagister() {
-        return magister;
     }
 
     @Override
     protected void onPreExecute() {
-        //dialog = ProgressDialog.show(activity, activity.getString(R.string.app_name), "Logging in...", true);
+        dialog = ProgressDialog.show(activity, activity.getString(R.string.app_name), "Logging in...", true);
     }
 
     @Override
@@ -100,9 +90,8 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
             }
             config.currentUser = user.username;
             ConfigUtil.saveConfig(activity, config);
-            loggedIn = true;
-            LoginThread.magister = magister;
-            new DownloadImageThread(activity).execute();
+            activity.setMagister(magister);
+            new ImageThread(activity).execute();
             Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container_main);
             if (currentFragment instanceof IFragment) {
                 IFragment fragment = (IFragment) currentFragment;
@@ -123,6 +112,6 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
             Log.e("HIPSTER", error);
             Snackbar.make(activity.getCurrentFocus(), error, Snackbar.LENGTH_LONG).show();
         }
-        //dialog.dismiss();
+        dialog.dismiss();
     }
 }

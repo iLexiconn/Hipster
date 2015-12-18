@@ -5,18 +5,19 @@ import android.graphics.*;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
+import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.magister.Magister;
 
 import java.io.*;
 
-public class DownloadImageThread extends AsyncTask<Void, Void, Bitmap> {
+public class ImageThread extends AsyncTask<Void, Void, Bitmap> {
     public Activity activity;
     public Magister magister;
 
-    public DownloadImageThread(Activity activity) {
+    public ImageThread(Activity activity) {
         this.activity = activity;
-        this.magister = LoginThread.getMagister();
+        this.magister = MainActivity.getMagister();
     }
 
     @Override
