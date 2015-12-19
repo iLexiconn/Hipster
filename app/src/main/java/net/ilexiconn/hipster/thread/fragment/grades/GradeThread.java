@@ -47,7 +47,7 @@ public class GradeThread extends FragmentThread<GradesTabFragment, Grade[]> {
                 }
                 subject = subject.substring(0, 1).toUpperCase() + subject.substring(1);
                 String lastGrade = "???";
-                if (!grade.gradePeriod.gradePeriodName.equals("Eind") || grade.gradePeriod.gradePeriodName.equals("PTA")) {
+                if (!grade.gradePeriod.gradePeriodName.equals("Eind") && !grade.gradePeriod.gradePeriodName.equals("PTA")) {
                     continue; //???
                 }
                 String averageGrade = grade.grade;
