@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static Magister magister;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         config = ConfigUtil.loadConfig(this);

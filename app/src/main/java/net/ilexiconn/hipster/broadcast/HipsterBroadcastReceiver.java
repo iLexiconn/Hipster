@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.notification.HipsterNotification;
@@ -42,12 +41,7 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
 
     public class CheckGradesThread extends AsyncTask<Void, Void, Grade[]> {
         @Override
-        public void onPreExecute() {
-            Log.d("HIPSTER", "Checking for new grades");
-        }
-
-        @Override
-        public Grade[] doInBackground(Void... params) {
+        protected Grade[] doInBackground(Void... params) {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date());
@@ -59,9 +53,6 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
                         gradeList.add(grade);
                     }
                 }
-                if (gradeList.isEmpty()) {
-                    return null;
-                }
                 return gradeList.toArray(new Grade[gradeList.size()]);
             } catch (IOException e) {
                 return null;
@@ -69,15 +60,13 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
         }
 
         @Override
-        public void onPostExecute(Grade[] grades) {
-            if (grades != null) {
-                Log.d("HIPSTER", "Found new grades, notifying user");
-                for (Grade grade : grades) {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context).setSmallIcon(R.drawable.ic_people_black_24dp).setContentTitle("Hipster").setContentText("Je hebt een " + grade.grade + " voor " + grade.subject.name + " gekregen.");
-                    notificationManager.notify(HipsterNotification.getUniqueID(), builder.build());
-                }
-            } else {
-                Log.d("HIPSTER", "No new grades found");
+        protected void onPostExecute(Grade[] grades) {
+            for (Grade grade : grades) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context)
+                        .setSmallIcon(R.drawable.ic_people_black_24dp)
+                        .setContentTitle("Hipster")
+                        .setContentText("Je hebt een " + grade.grade + " voor " + grade.subject.name + " gekregen.");
+                notificationManager.notify(HipsterNotification.getUniqueID(), builder.build());
             }
             wakeLock.release();
         }
