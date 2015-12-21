@@ -4,8 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -33,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
     private Config config;
 
     private static Magister magister;
+    private static Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         config = ConfigUtil.loadConfig(this);
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
         User currentUser = config.getCurrentUser();
         if (currentUser != null && (!isLoggedIn() || getMagister().isExpired())) {
@@ -129,11 +134,19 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.magister = magister;
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        MainActivity.bitmap = bitmap;
+    }
+
     public static boolean isLoggedIn() {
         return magister != null;
     }
 
     public static Magister getMagister() {
         return magister;
+    }
+
+    public static Bitmap getBitmap() {
+        return bitmap;
     }
 }

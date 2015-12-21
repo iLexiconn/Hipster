@@ -9,6 +9,7 @@ public class Config {
     public List<User> users = new ArrayList<>();
     public int color = -16738597;
     public String currentUser;
+    public boolean toolbarAvatar = true;
 
     public User getCurrentUser() {
         if (currentUser == null || currentUser.isEmpty()) {

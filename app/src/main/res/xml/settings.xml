@@ -10,6 +10,12 @@
                 android:title="@string/color"
                 android:key="@string/color"/>
 
+        <CheckBoxPreference
+                android:key="@string/toolbar_avatar"
+                android:title="@string/toolbar_avatar"
+                android:summary="@string/toolbar_avatar_desc"
+                android:defaultValue="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -3,6 +3,7 @@ package net.ilexiconn.hipster.fragment.main.tabs.settings;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import net.ilexiconn.hipster.MainActivity;
@@ -33,9 +35,31 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null) {
+
+        if (savedInstanceState == null) {
             addPreferencesFromResource(R.xml.settings);
         }
+
+        Config config = ConfigUtil.loadConfig(getActivity());
+
+        CheckBoxPreference toolbarAvatar = (CheckBoxPreference) findPreference(getString(R.string.toolbar_avatar));
+        toolbarAvatar.setChecked(config.toolbarAvatar);
+        toolbarAvatar.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Config config = ConfigUtil.loadConfig(getActivity());
+                config.toolbarAvatar = !config.toolbarAvatar;
+                ConfigUtil.saveConfig(getActivity(), config);
+                ImageView toolbarPicture = (ImageView) getActivity().findViewById(R.id.toolbar_avatar);
+                if (config.toolbarAvatar) {
+                    toolbarPicture.setImageBitmap(MainActivity.getBitmap());
+                } else {
+                    toolbarPicture.setImageBitmap(null);
+                }
+                return true;
+            }
+        });
+
         Preference logout = findPreference(getString(R.string.logout));
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

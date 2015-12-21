@@ -30,5 +30,7 @@
     <string name="logged_off">Nog niet ingelogd! Je kan dit doen in het Instellingenmenu.</string>
     <string name="back">Terug</string>
     <string name="not_logged_in">Niet ingelogd</string>
+    <string name="toolbar_avatar">Toolbar afbeelding</string>
+    <string name="toolbar_avatar_desc">Geef jouw Magister profiel foto weer in de toolbar</string>
 
 </resources>
