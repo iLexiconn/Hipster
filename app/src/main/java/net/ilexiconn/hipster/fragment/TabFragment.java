@@ -25,9 +25,4 @@ public abstract class TabFragment extends Fragment implements ITabFragment {
     public void setForcedRefresh(boolean forcedRefresh) {
         this.forcedRefresh = forcedRefresh;
     }
-
-    @Override
-    public Fragment getFragment() {
-        return this;
-    }
 }

@@ -8,8 +8,8 @@ android {
         applicationId "net.ilexiconn.hipster"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "0.1.0"
+        versionCode 100
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -19,12 +19,29 @@ android {
     }
 }
 
+repositories {
+    maven {
+        name = "ilexiconn"
+        url = "http://maven.ilexiconn.net/"
+    }
+    maven {
+        url "http://dl.bintray.com/jlmd/maven"
+    }
+}
+
 dependencies {
-    compile(project(':magister.java'))
+    compile('com.mikepenz:materialdrawer:4.6.1@aar') {
+        transitive = true
+    }
+    compile('com.mikepenz:aboutlibraries:5.3.4@aar') {
+        transitive = true
+    }
+    compile 'net.ilexiconn:magister:0.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.code.gson:gson:2.5'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'
     compile 'com.pes.materialcolorpicker:library:1.0.2'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
+    compile 'com.github.jlmd:AnimatedCircleLoadingView:1.1.2@aar'
 }

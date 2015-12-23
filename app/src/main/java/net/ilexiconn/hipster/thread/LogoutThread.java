@@ -2,8 +2,7 @@ package net.ilexiconn.hipster.thread;
 
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.Fragments;
@@ -40,15 +39,13 @@ public class LogoutThread extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean bool) {
         if (bool) {
             for (Fragments fragment : Fragments.values()) {
-                for (ITabFragment fragmentTab : fragment.getFragment().getFragmentTabs()) {
-                    fragmentTab.setForcedRefresh(true);
+                for (Fragment tabFragment : fragment.getFragment().getFragmentTabs()) {
+                    if (tabFragment instanceof ITabFragment) {
+                        ((ITabFragment) tabFragment).setForcedRefresh(true);
+                    }
                 }
             }
             activity.setMagister(null);
-            ImageView profilePicture = (ImageView) activity.findViewById(R.id.profile_picture);
-            profilePicture.setImageResource(0);
-            TextView profileName = (TextView) activity.findViewById(R.id.profile_name);
-            profileName.setText(R.string.not_logged_in);
             Snackbar.make(activity.getCurrentFocus(), "Uitgelogd", Snackbar.LENGTH_LONG).show();
         } else {
             Snackbar.make(activity.getCurrentFocus(), error, Snackbar.LENGTH_LONG).show();

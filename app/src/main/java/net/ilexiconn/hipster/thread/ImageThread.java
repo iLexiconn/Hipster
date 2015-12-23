@@ -3,7 +3,6 @@ package net.ilexiconn.hipster.thread;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.widget.ImageView;
-import android.widget.TextView;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
@@ -70,12 +69,8 @@ public class ImageThread extends AsyncTask<Void, Void, Bitmap> {
                 return;
             }
         }
-        activity.setBitmap(image);
         Config config = ConfigUtil.loadConfig(activity);
-        ImageView profilePicture = (ImageView) activity.findViewById(R.id.profile_picture);
-        profilePicture.setImageBitmap(image);
-        TextView profileName = (TextView) activity.findViewById(R.id.profile_name);
-        profileName.setText(magister.profile.nickname);
+        activity.setBitmap(image);
         ImageView toolbarPicture = (ImageView) activity.findViewById(R.id.toolbar_avatar);
         if (config.toolbarAvatar) {
             toolbarPicture.setImageBitmap(image);

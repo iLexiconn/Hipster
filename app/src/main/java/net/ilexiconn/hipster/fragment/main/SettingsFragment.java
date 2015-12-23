@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import net.ilexiconn.hipster.R;
-import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.IFragment;
-import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.fragment.main.tabs.settings.SettingsTabFragment;
 import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
-import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class SettingsFragment extends PreferenceFragment implements IFragment {
-    private ITabFragment[] tabFragments = new ITabFragment[]{
+    private Fragment[] tabFragments = new Fragment[]{
             new SettingsTabFragment()
     };
 
@@ -31,10 +28,10 @@ public class SettingsFragment extends PreferenceFragment implements IFragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        Config config = ConfigUtil.loadConfig(getActivity());
+        /*Config config = ConfigUtil.loadConfig(getActivity());
         int color = config.color;
         tabLayout.setBackgroundColor(color);
-        tabLayout.setSelectedTabIndicatorColor(color);
+        tabLayout.setSelectedTabIndicatorColor(color);*/
 
         return view;
     }
@@ -45,7 +42,7 @@ public class SettingsFragment extends PreferenceFragment implements IFragment {
     }
 
     @Override
-    public ITabFragment[] getFragmentTabs() {
+    public Fragment[] getFragmentTabs() {
         return tabFragments;
     }
 }

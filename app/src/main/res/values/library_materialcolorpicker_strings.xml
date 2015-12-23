@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_int_materialcolorpicker"></string>
+	<!-- Author section -->
+	<string name="library_materialcolorpicker_author">Pes8</string>
+	<!-- Library section -->
+	<string name="library_materialcolorpicker_libraryName">Material Color Picker</string>
+	<string name="library_materialcolorpicker_libraryDescription">A simple, minimalistic and beautiful dialog color picker for Android 4.1+ devices. This color picker is easy-to-use and easy-to-integrate in your application to let users of your app choose color in a simple way.</string>
+	<string name="library_materialcolorpicker_libraryVersion">1.0.2</string>
+	<!-- OpenSource section -->
+	<string name="library_materialcolorpicker_isOpenSource">true</string>
+	<string name="library_materialcolorpicker_repositoryLink">https://github.com/Pes8/android-material-color-picker-dialog</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_materialcolorpicker_classPath"></string>
+	<!-- License section -->
+	<string name="library_materialcolorpicker_licenseId">mit</string>
+	<!-- Custom variables section -->
+</resources>

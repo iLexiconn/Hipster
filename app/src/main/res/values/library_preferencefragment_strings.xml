@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_int_preferencefragment"></string>
+	<!-- Author section -->
+	<string name="library_preferencefragment_author">Machinarius</string>
+	<!-- Library section -->
+	<string name="library_preferencefragment_libraryName">PreferenceFragment</string>
+	<string name="library_preferencefragment_libraryDescription">Unofficial PreferenceFragment compatibility layer for Android 1.6 and up.</string>
+	<string name="library_preferencefragment_libraryVersion">0.1.1</string>
+	<!-- OpenSource section -->
+	<string name="library_preferencefragment_isOpenSource">true</string>
+	<string name="library_preferencefragment_repositoryLink">https://github.com/Machinarius/PreferenceFragment-Compat</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_preferencefragment_classPath"></string>
+	<!-- License section -->
+	<string name="library_preferencefragment_licenseId">apache_2_0</string>
+	<!-- Custom variables section -->
+</resources>

@@ -27,10 +27,11 @@
     <string name="add_account">Voeg account toe</string>
     <string name="set_account">Verander van account</string>
     <string name="unknown_error">Onbekende fout</string>
-    <string name="logged_off">Nog niet ingelogd! Je kan dit doen in het Instellingenmenu.</string>
+    <string name="logged_off">Nog niet ingelogd! Je kan dit doen in het menu.</string>
     <string name="back">Terug</string>
     <string name="not_logged_in">Niet ingelogd</string>
     <string name="toolbar_avatar">Toolbar afbeelding</string>
     <string name="toolbar_avatar_desc">Geef jouw Magister profiel foto weer in de toolbar</string>
+    <string name="about">Over</string>
 
 </resources>

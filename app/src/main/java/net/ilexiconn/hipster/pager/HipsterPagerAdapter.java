@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import net.ilexiconn.hipster.fragment.Fragments;
 import net.ilexiconn.hipster.fragment.IFragment;
 import net.ilexiconn.hipster.fragment.ITabFragment;
 
@@ -11,15 +12,17 @@ public class HipsterPagerAdapter extends FragmentPagerAdapter {
 
     public HipsterPagerAdapter(IFragment fragment) {
         super(fragment.getFragment().getChildFragmentManager());
-        ITabFragment[] tabFragments = fragment.getFragmentTabs();
+        Fragment[] tabFragments = fragment.getFragmentTabs();
         strings = new String[tabFragments.length];
         for (int i = 0; i < strings.length; i++) {
-            strings[i] = fragment.getFragment().getActivity().getString(tabFragments[i].getTitle());
+            if (tabFragments[i] instanceof ITabFragment) {
+                strings[i] = fragment.getFragment().getActivity().getString(((ITabFragment) tabFragments[i]).getTitle());
+            } else {
+                strings[i] = Fragments.getFragmentFromInstance(fragment).name();
+            }
         }
         fragments = new Fragment[tabFragments.length];
-        for (int i = 0; i < fragments.length; i++) {
-            fragments[i] = tabFragments[i].getFragment();
-        }
+        System.arraycopy(tabFragments, 0, fragments, 0, fragments.length);
     }
 
     @Override

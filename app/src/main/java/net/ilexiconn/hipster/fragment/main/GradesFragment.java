@@ -8,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.ilexiconn.hipster.R;
-import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.IFragment;
-import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.fragment.main.tabs.grades.GradesTabFragment;
 import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
-import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class GradesFragment extends Fragment implements IFragment {
-    private ITabFragment[] tabFragments = new ITabFragment[]{
+    private Fragment[] tabFragments = new Fragment[]{
             new GradesTabFragment()
     };
 
@@ -30,10 +27,10 @@ public class GradesFragment extends Fragment implements IFragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.grades_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        Config config = ConfigUtil.loadConfig(getActivity());
+        /*Config config = ConfigUtil.loadConfig(getActivity());
         int color = config.color;
         tabLayout.setBackgroundColor(color);
-        tabLayout.setSelectedTabIndicatorColor(color);
+        tabLayout.setSelectedTabIndicatorColor(color);*/
 
         return view;
     }
@@ -44,7 +41,7 @@ public class GradesFragment extends Fragment implements IFragment {
     }
 
     @Override
-    public ITabFragment[] getFragmentTabs() {
+    public Fragment[] getFragmentTabs() {
         return tabFragments;
     }
 }

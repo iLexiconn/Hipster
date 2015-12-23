@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_int_prettytime"></string>
+	<!-- Author section -->
+	<string name="library_prettytime_author">ocpsoft</string>
+	<string name="library_prettytime_authorWebsite">ocpsoft.org</string>
+	<!-- Library section -->
+	<string name="library_prettytime_libraryName">PrettyTime</string>
+	<string name="library_prettytime_libraryDescription">PrettyTime is an OpenSource time formatting library. Completely customizable, it creates human readable, relative timestamps like those seen on Digg, Twitter, and Facebook. Get started “right now!” and in over 30 languages!</string>
+	<string name="library_prettytime_libraryWebsite">http://www.ocpsoft.org/prettytime/</string>
+	<string name="library_prettytime_libraryVersion">3.2.7</string>
+	<!-- OpenSource section -->
+	<string name="library_prettytime_isOpenSource">true</string>
+	<string name="library_prettytime_repositoryLink">https://github.com/ocpsoft/prettytime</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_prettytime_classPath"></string>
+	<!-- License section -->
+	<string name="library_prettytime_licenseId">apache_2_0</string>
+	<!-- Custom variables section -->
+</resources>

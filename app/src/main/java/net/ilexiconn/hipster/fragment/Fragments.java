@@ -1,47 +1,57 @@
 package net.ilexiconn.hipster.fragment;
 
+import android.support.annotation.StringRes;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import net.ilexiconn.hipster.R;
-import net.ilexiconn.hipster.fragment.main.DashboardFragment;
-import net.ilexiconn.hipster.fragment.main.GradesFragment;
-import net.ilexiconn.hipster.fragment.main.SettingsFragment;
-import net.ilexiconn.hipster.fragment.main.TimetableFragment;
+import net.ilexiconn.hipster.fragment.main.*;
 
 public enum Fragments {
-    DASHBOARD(R.id.nav_dashboard, new DashboardFragment(), R.drawable.ic_class_black_24dp),
-    GRADES(R.id.nav_grades, new GradesFragment(), R.drawable.ic_done_all_black_24dp),
-    TIMETABLE(R.id.nav_timetable, new TimetableFragment(), R.drawable.ic_watch_later_black_24dp),
-    SETTINGS(R.id.nav_settings, new SettingsFragment(), R.drawable.ic_settings_black_24dp);
+    DASHBOARD(R.string.dashboard, new DashboardFragment(), R.drawable.ic_class_black_24dp),
+    GRADES(R.string.grades, new GradesFragment(), R.drawable.ic_done_all_black_24dp),
+    TIMETABLE(R.string.timetable, new TimetableFragment(), R.drawable.ic_watch_later_black_24dp),
+    SETTINGS(R.string.settings, new SettingsFragment(), R.drawable.ic_settings_black_24dp),
+    ABOUT(R.string.about, new AboutFragment(), R.drawable.ic_build_black_24dp);
 
-    private int id;
+    private IDrawerItem<?> drawerItem;
     private IFragment fragment;
     private int icon;
 
-    Fragments(int id, IFragment fragment, int icon) {
-        this.id = id;
+    Fragments(@StringRes int name, IFragment fragment, int icon) {
+        this.drawerItem = new PrimaryDrawerItem().withName(name).withIcon(icon).withIconTintingEnabled(true);
         this.fragment = fragment;
         this.icon = icon;
     }
 
-    public static Fragments getFragmentFromID(int id) {
+    public static Fragments getFragmentFromItem(IDrawerItem<?> drawerItem) {
         for (Fragments fragments : values()) {
-            if (fragments.id == id) {
+            if (fragments.drawerItem == drawerItem) {
                 return fragments;
             }
         }
         return null;
     }
 
-    public static int getIDFromFragment(IFragment fragment) {
+    public static IDrawerItem<?> getItemFromFragment(IFragment fragment) {
         for (Fragments fragments : values()) {
             if (fragments.getFragment().equals(fragment)) {
-                return fragments.getId();
+                return fragments.getDrawerItem();
             }
         }
-        return DASHBOARD.getId();
+        return DASHBOARD.getDrawerItem();
     }
 
-    public int getId() {
-        return id;
+    public static Fragments getFragmentFromInstance(IFragment fragment) {
+        for (Fragments fragments : values()) {
+            if (fragments.getFragment().equals(fragment)) {
+                return fragments;
+            }
+        }
+        return null;
+    }
+
+    public IDrawerItem<?> getDrawerItem() {
+        return drawerItem;
     }
 
     public IFragment getFragment() {

@@ -61,12 +61,14 @@ public class HipsterBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         protected void onPostExecute(Grade[] grades) {
-            for (Grade grade : grades) {
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context)
-                        .setSmallIcon(R.drawable.ic_people_black_24dp)
-                        .setContentTitle("Hipster")
-                        .setContentText("Je hebt een " + grade.grade + " voor " + grade.subject.name + " gekregen.");
-                notificationManager.notify(HipsterNotification.getUniqueID(), builder.build());
+            if (grades != null) {
+                for (Grade grade : grades) {
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(HipsterBroadcastReceiver.this.context)
+                            .setSmallIcon(R.drawable.ic_people_black_24dp)
+                            .setContentTitle("Hipster")
+                            .setContentText("Je hebt een " + grade.grade + " voor " + grade.subject.name + " gekregen.");
+                    notificationManager.notify(HipsterNotification.getUniqueID(), builder.build());
+                }
             }
             wakeLock.release();
         }
