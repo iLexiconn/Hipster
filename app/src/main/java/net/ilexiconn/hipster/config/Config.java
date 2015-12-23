@@ -30,9 +30,7 @@ public class Config {
             profileMap.put(user, new ProfileDrawerItem().withName(user.nickname));
             try {
                 profileMap.get(user).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            } catch (FileNotFoundException e) {}
             accountHeaderBuilder.addProfiles(profileMap.get(user));
         }
     }
@@ -46,9 +44,7 @@ public class Config {
         profileMap.put(user, new ProfileDrawerItem().withName(user.nickname));
         try {
             profileMap.get(user).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (FileNotFoundException e) {}
         accountHeaderBuilder.addProfile(profileMap.get(user), accountHeaderBuilder.getProfiles().size() - 2);
     }
 

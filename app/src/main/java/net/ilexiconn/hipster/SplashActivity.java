@@ -57,7 +57,6 @@ public class SplashActivity extends Activity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Log.i("HIPSTER", "LOGIN SUCCESSFUL");
                             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                             intent.putExtra("magister", magister);
                             startActivity(intent);

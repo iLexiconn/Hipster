@@ -3,6 +3,7 @@ package net.ilexiconn.hipster.thread;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
@@ -71,6 +72,10 @@ public class ImageThread extends AsyncTask<Void, Void, Bitmap> {
         }
         Config config = ConfigUtil.loadConfig(activity);
         activity.setBitmap(image);
+        IProfile<?> profile = config.getProfileForUser(config.getCurrentUser());
+        if (profile.getIcon() == null) {
+            profile.withIcon(image);
+        }
         ImageView toolbarPicture = (ImageView) activity.findViewById(R.id.toolbar_avatar);
         if (config.toolbarAvatar) {
             toolbarPicture.setImageBitmap(image);

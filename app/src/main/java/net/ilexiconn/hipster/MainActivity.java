@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         accountHeaderBuilder.addProfiles(new ProfileSettingDrawerItem().withName("Uitloggen").withIcon(R.drawable.ic_settings_black_24dp).withIconColorRes(R.color.textPrimary).withIdentifier(2));
 
         accountHeader = accountHeaderBuilder.build();
+        accountHeader.setActiveProfile(config.getProfileForUser(currentUser));
 
         DrawerBuilder drawerBuilder = new DrawerBuilder()
                 .withActivity(this)
