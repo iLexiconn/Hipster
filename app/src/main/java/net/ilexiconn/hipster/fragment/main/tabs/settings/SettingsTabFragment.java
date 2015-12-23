@@ -1,17 +1,23 @@
 package net.ilexiconn.hipster.fragment.main.tabs.settings;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.ITabFragment;
+import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.magister.Magister;
 
@@ -46,33 +52,34 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
             }
         });
 
-        /*Preference color = findPreference(getString(R.string.color));
+        Preference color = findPreference(getString(R.string.color));
         color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 final Config config = ConfigUtil.loadConfig(getActivity());
-                int color = config.color;
-                int r = (color >> 16) & 0xFF;
-                int g = (color >> 8) & 0xFF;
-                int b = (color) & 0xFF;
+                String color = config.color;
+                int colorInt = Color.parseColor(color);
+                int r = (colorInt >> 16) & 0xFF;
+                int g = (colorInt >> 8) & 0xFF;
+                int b = (colorInt) & 0xFF;
                 final ColorPicker colorPicker = new ColorPicker(getActivity(), r, g, b);
                 colorPicker.show();
                 Button close = (Button) colorPicker.findViewById(R.id.okColorButton);
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int selectedColorRGB = colorPicker.getColor();
+                        int selectedColorInt = colorPicker.getColor();
 
-                        getActivity().findViewById(R.id.toolbar).setBackgroundColor(selectedColorRGB);
+                        getActivity().findViewById(R.id.toolbar).setBackgroundColor(selectedColorInt);
                         TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.settings_tabs);
-                        tabLayout.setBackgroundColor(selectedColorRGB);
-                        tabLayout.setSelectedTabIndicatorColor(selectedColorRGB);
+                        tabLayout.setBackgroundColor(selectedColorInt);
+                        tabLayout.setSelectedTabIndicatorColor(selectedColorInt);
 
                         if (Build.VERSION.SDK_INT >= 21) {
-                            getActivity().getWindow().setStatusBarColor(ColorUtil.darker(selectedColorRGB, 0.75f));
+                            getActivity().getWindow().setStatusBarColor(ColorUtil.darker(selectedColorInt, 0.75f));
                         }
 
-                        config.color = selectedColorRGB;
+                        config.color = String.format("#%06X", 0xFFFFFF & selectedColorInt);
                         ConfigUtil.saveConfig(getActivity(), config);
 
                         colorPicker.dismiss();
@@ -80,7 +87,7 @@ public class SettingsTabFragment extends PreferenceFragment implements ITabFragm
                 });
                 return true;
             }
-        });*/
+        });
     }
 
     @Override

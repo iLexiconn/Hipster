@@ -3,19 +3,15 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
-    <PreferenceCategory
-            android:title="@string/user_interface">
+    <Preference
+            android:title="@string/color"
+            android:key="@string/color"
+            android:summary="@string/color_desc"/>
 
-        <!--<Preference
-                android:title="@string/color"
-                android:key="@string/color"/>-->
-
-        <CheckBoxPreference
-                android:key="@string/toolbar_avatar"
-                android:title="@string/toolbar_avatar"
-                android:summary="@string/toolbar_avatar_desc"
-                android:defaultValue="true" />
-
-    </PreferenceCategory>
+    <CheckBoxPreference
+            android:key="@string/toolbar_avatar"
+            android:title="@string/toolbar_avatar"
+            android:summary="@string/toolbar_avatar_desc"
+            android:defaultValue="true"/>
 
 </PreferenceScreen>

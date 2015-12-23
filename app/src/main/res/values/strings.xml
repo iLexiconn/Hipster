@@ -33,5 +33,6 @@
     <string name="toolbar_avatar">Toolbar afbeelding</string>
     <string name="toolbar_avatar_desc">Geef jouw Magister profiel foto weer in de toolbar</string>
     <string name="about">Over</string>
+    <string name="color_desc">Stel de kleur van de toolbar in</string>
 
 </resources>

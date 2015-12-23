@@ -1,5 +1,6 @@
 package net.ilexiconn.hipster.fragment.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import net.ilexiconn.hipster.R;
+import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.fragment.IFragment;
 import net.ilexiconn.hipster.fragment.main.tabs.settings.SettingsTabFragment;
 import net.ilexiconn.hipster.pager.HipsterPagerAdapter;
+import net.ilexiconn.hipster.util.ConfigUtil;
 
 public class SettingsFragment extends PreferenceFragment implements IFragment {
     private Fragment[] tabFragments = new Fragment[]{
@@ -28,10 +31,10 @@ public class SettingsFragment extends PreferenceFragment implements IFragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.settings_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        /*Config config = ConfigUtil.loadConfig(getActivity());
-        int color = config.color;
-        tabLayout.setBackgroundColor(color);
-        tabLayout.setSelectedTabIndicatorColor(color);*/
+        Config config = ConfigUtil.loadConfig(getActivity());
+        String color = config.color;
+        tabLayout.setBackgroundColor(Color.parseColor(color));
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor(color));
 
         return view;
     }

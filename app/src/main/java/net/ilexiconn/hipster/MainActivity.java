@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -33,6 +35,7 @@ import net.ilexiconn.hipster.fragment.Fragments;
 import net.ilexiconn.hipster.fragment.ITabFragment;
 import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.thread.LogoutThread;
+import net.ilexiconn.hipster.util.ColorUtil;
 import net.ilexiconn.hipster.util.ConfigUtil;
 import net.ilexiconn.hipster.util.IMatcher;
 import net.ilexiconn.magister.Magister;
@@ -55,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         final User currentUser = config.getCurrentUser();
         Log.i("HIPSTER", "LOADING MAGISTER");
         Bundle bundle = getIntent().getExtras();
-        magister = bundle.getParcelable("magister");
+        if (bundle != null) {
+            magister = bundle.getParcelable("magister");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         AccountHeaderBuilder accountHeaderBuilder = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.rectangle_blue)
+                .withHeaderBackground(R.drawable.header)
                 .withDividerBelowHeader(false)
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -202,11 +207,11 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = drawerBuilder.build();
 
-        /*int color = config.color;
-        findViewById(R.id.toolbar).setBackgroundColor(color);
+        String color = config.color;
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(color));
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ColorUtil.darker(color, 0.75f));
-        }*/
+            getWindow().setStatusBarColor(ColorUtil.darker(Color.parseColor(color), 0.75f));
+        }
 
         setFragment(Fragments.DASHBOARD);
     }

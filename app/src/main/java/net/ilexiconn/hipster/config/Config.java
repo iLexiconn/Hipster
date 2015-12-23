@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class Config {
     public List<User> users = new ArrayList<>();
-    public int color = 1601006;
+    public String color = "#186dee";
     public String currentUser;
     public boolean toolbarAvatar = true;
 
