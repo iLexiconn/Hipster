@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.TextView;
 import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
 import net.ilexiconn.hipster.config.Config;

@@ -40,11 +40,30 @@ import net.ilexiconn.hipster.util.IMatcher;
 import net.ilexiconn.magister.Magister;
 
 public class MainActivity extends AppCompatActivity {
+    private static Magister magister;
+    private static Bitmap bitmap;
     public Drawer drawer;
     public AccountHeader accountHeader;
 
-    private static Magister magister;
-    private static Bitmap bitmap;
+    public static boolean isLoggedIn() {
+        return magister != null;
+    }
+
+    public static Magister getMagister() {
+        return magister;
+    }
+
+    public void setMagister(Magister magister) {
+        MainActivity.magister = magister;
+    }
+
+    public static Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        MainActivity.bitmap = bitmap;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,25 +223,5 @@ public class MainActivity extends AppCompatActivity {
                 ((ITabFragment) tabFragment).onReload();
             }
         }
-    }
-
-    public void setMagister(Magister magister) {
-        MainActivity.magister = magister;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        MainActivity.bitmap = bitmap;
-    }
-
-    public static boolean isLoggedIn() {
-        return magister != null;
-    }
-
-    public static Magister getMagister() {
-        return magister;
-    }
-
-    public static Bitmap getBitmap() {
-        return bitmap;
     }
 }

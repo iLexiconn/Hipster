@@ -18,12 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Config {
+    private static transient Map<String, IProfile<?>> profileMap = new HashMap<>();
     public List<User> users = new ArrayList<>();
     public String color = "#186dee";
     public String currentUser;
     public boolean toolbarAvatar = true;
-
-    private static transient Map<String, IProfile<?>> profileMap = new HashMap<>();
 
     public void initProfiles(Activity activity, AccountHeaderBuilder accountHeaderBuilder) {
         File saveDir = new File(activity.getFilesDir(), "img");
@@ -31,7 +30,8 @@ public class Config {
             profileMap.put(user.username, new ProfileDrawerItem().withName(user.nickname));
             try {
                 profileMap.get(user.username).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
-            } catch (FileNotFoundException e) {}
+            } catch (FileNotFoundException e) {
+            }
             accountHeaderBuilder.addProfiles(profileMap.get(user.username));
         }
         checkProfiles("initProfiles");
@@ -47,7 +47,8 @@ public class Config {
         profileMap.put(user.username, new ProfileDrawerItem().withName(user.nickname));
         try {
             profileMap.get(user.username).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
-        } catch (FileNotFoundException e) {}
+        } catch (FileNotFoundException e) {
+        }
         accountHeader.addProfile(profileMap.get(user.username), accountHeader.getProfiles().size() - 2);
         checkProfiles("addProfileForUser");
     }
