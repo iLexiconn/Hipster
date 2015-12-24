@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -106,56 +105,12 @@ public class MainActivity extends AppCompatActivity {
                             dialogBuilder.create().show();
                         } else if (profile.getIdentifier() == 2) {
                             if (isLoggedIn()) {
-                                final Config config = ConfigUtil.loadConfig(MainActivity.this);
-                                final User oldUser = config.getCurrentUser();
-                                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.select_dialog_item);
+                                Config config = ConfigUtil.loadConfig(MainActivity.this);
+                                config.removeProfile(accountHeader, config.getCurrentUser());
+                                config.currentUser = null;
+                                ConfigUtil.saveConfig(MainActivity.this, config);
 
-                                for (User user : config.users) {
-                                    if (user != oldUser) {
-                                        arrayAdapter.add(user.nickname);
-                                    }
-                                }
-
-                                if (!arrayAdapter.isEmpty()) {
-                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
-                                    dialogBuilder.setTitle(R.string.login);
-                                    dialogBuilder.setCancelable(false);
-
-                                    dialogBuilder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-
-                                    dialogBuilder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, final int which) {
-                                            if (which != -1) {
-                                                User newUser = config.getUser(new IMatcher<User>() {
-                                                    @Override
-                                                    public boolean matches(User object) {
-                                                        return object.nickname.equals(arrayAdapter.getItem(which));
-                                                    }
-                                                });
-                                                config.currentUser = newUser.username;
-                                                config.users.remove(oldUser);
-                                                ConfigUtil.saveConfig(MainActivity.this, config);
-
-                                                new LoginThread(MainActivity.this, newUser).execute();
-                                            }
-                                        }
-                                    });
-
-                                    dialogBuilder.show();
-                                } else {
-                                    config.users.clear();
-                                    accountHeader.removeProfile(config.getProfileForUser(currentUser));
-                                    config.currentUser = null;
-                                    ConfigUtil.saveConfig(MainActivity.this, config);
-
-                                    new LogoutThread(MainActivity.this).execute();
-                                }
+                                new LogoutThread(MainActivity.this).execute();
 
                                 return true;
                             } else {
@@ -184,7 +139,11 @@ public class MainActivity extends AppCompatActivity {
         accountHeaderBuilder.addProfiles(new ProfileSettingDrawerItem().withName("Uitloggen").withIcon(R.drawable.ic_settings_black_24dp).withIconColorRes(R.color.textPrimary).withIdentifier(2));
 
         accountHeader = accountHeaderBuilder.build();
-        accountHeader.setActiveProfile(config.getProfileForUser(currentUser));
+        if (currentUser != null) {
+            accountHeader.setActiveProfile(config.getProfileForUser(currentUser));
+        } else {
+            accountHeader.setActiveProfile(-1);
+        }
 
         DrawerBuilder drawerBuilder = new DrawerBuilder()
                 .withActivity(this)

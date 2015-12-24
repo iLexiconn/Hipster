@@ -73,7 +73,7 @@ public class ImageThread extends AsyncTask<Void, Void, Bitmap> {
         Config config = ConfigUtil.loadConfig(activity);
         activity.setBitmap(image);
         IProfile<?> profile = config.getProfileForUser(config.getCurrentUser());
-        if (profile.getIcon() == null) {
+        if (profile != null && profile.getIcon() == null) {
             profile.withIcon(image);
         }
         ImageView toolbarPicture = (ImageView) activity.findViewById(R.id.toolbar_avatar);

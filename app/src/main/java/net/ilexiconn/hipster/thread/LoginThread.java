@@ -85,7 +85,7 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
         if (magister != null) {
             User user;
             if (config.getUser(magister.user.username) == null) {
-                user = new User(magister.school.url.split("//.")[0], magister.user.username, magister.user.password, magister.profile.nickname);
+                user = new User(magister.school.url.substring(8).split("\\.")[0], magister.user.username, magister.user.password, magister.profile.nickname);
                 config.users.add(user);
             } else {
                 user = config.getUser(magister.user.username);

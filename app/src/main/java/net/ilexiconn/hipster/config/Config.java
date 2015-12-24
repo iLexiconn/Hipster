@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.config;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
@@ -22,30 +23,41 @@ public class Config {
     public String currentUser;
     public boolean toolbarAvatar = true;
 
-    private transient Map<User, IProfile<?>> profileMap = new HashMap<>();
+    private static transient Map<String, IProfile<?>> profileMap = new HashMap<>();
 
     public void initProfiles(Activity activity, AccountHeaderBuilder accountHeaderBuilder) {
         File saveDir = new File(activity.getFilesDir(), "img");
         for (User user : users) {
-            profileMap.put(user, new ProfileDrawerItem().withName(user.nickname));
+            profileMap.put(user.username, new ProfileDrawerItem().withName(user.nickname));
             try {
-                profileMap.get(user).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
+                profileMap.get(user.username).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
             } catch (FileNotFoundException e) {}
-            accountHeaderBuilder.addProfiles(profileMap.get(user));
+            accountHeaderBuilder.addProfiles(profileMap.get(user.username));
         }
+        checkProfiles("initProfiles");
     }
 
     public IProfile<?> getProfileForUser(User user) {
-        return profileMap.get(user);
+        checkProfiles("getProfileForUser");
+        return profileMap.get(user.username);
     }
 
-    public void addProfileForUser(Activity activity, AccountHeader accountHeaderBuilder, User user) {
+    public void addProfileForUser(Activity activity, AccountHeader accountHeader, User user) {
         File saveDir = new File(activity.getFilesDir(), "img");
-        profileMap.put(user, new ProfileDrawerItem().withName(user.nickname));
+        profileMap.put(user.username, new ProfileDrawerItem().withName(user.nickname));
         try {
-            profileMap.get(user).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
+            profileMap.get(user.username).withIcon(BitmapFactory.decodeStream(new FileInputStream(new File(saveDir, user.username + ".png"))));
         } catch (FileNotFoundException e) {}
-        accountHeaderBuilder.addProfile(profileMap.get(user), accountHeaderBuilder.getProfiles().size() - 2);
+        accountHeader.addProfile(profileMap.get(user.username), accountHeader.getProfiles().size() - 2);
+        checkProfiles("addProfileForUser");
+    }
+
+    public void removeProfile(AccountHeader accountHeader, User user) {
+        checkProfiles("removeProfile (1)");
+        IProfile<?> profile = getProfileForUser(user);
+        profileMap.remove(user.username);
+        accountHeader.removeProfileByIdentifier(profile.getIdentifier());
+        checkProfiles("removeProfile (2)");
     }
 
     public User getCurrentUser() {
@@ -82,5 +94,13 @@ public class Config {
             }
         }
         return null;
+    }
+
+    public void checkProfiles(String method) {
+        Log.i("HIPSTER", "CURRENT PROFILES (" + method + ")");
+        for (Map.Entry<String, IProfile<?>> entry : profileMap.entrySet()) {
+            Log.i("HIPSTER", " - " + entry.getKey());
+        }
+        Log.i("HIPSTER", "END");
     }
 }
