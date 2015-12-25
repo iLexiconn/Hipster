@@ -32,6 +32,7 @@ import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.fragment.Fragments;
 import net.ilexiconn.hipster.fragment.ITabFragment;
+import net.ilexiconn.hipster.thread.ImageThread;
 import net.ilexiconn.hipster.thread.LoginThread;
 import net.ilexiconn.hipster.thread.LogoutThread;
 import net.ilexiconn.hipster.util.ColorUtil;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             magister = bundle.getParcelable("magister");
+            new ImageThread(this).execute();
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

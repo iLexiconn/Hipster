@@ -25,6 +25,10 @@ public abstract class FragmentThread<TYPE extends TabFragment, RESULT> extends A
         return tabFragment.getActivity();
     }
 
+    @Override
+    @MainThread
+    protected abstract void onPreExecute();
+
     protected abstract RESULT onExecute();
 
     @Override

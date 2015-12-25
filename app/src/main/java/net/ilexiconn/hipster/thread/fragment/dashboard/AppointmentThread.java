@@ -24,6 +24,11 @@ public class AppointmentThread extends FragmentThread<AppointmentsTabFragment, A
     }
 
     @Override
+    protected void onPreExecute() {
+        getTabFragment().swipeRefresh.setRefreshing(true);
+    }
+
+    @Override
     protected Appointment[] onExecute() {
         AppointmentHandler appointmentHandler = MainActivity.getMagister().getHandler(AppointmentHandler.class);
         try {

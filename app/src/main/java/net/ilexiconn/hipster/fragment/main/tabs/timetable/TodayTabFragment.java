@@ -59,10 +59,9 @@ public class TodayTabFragment extends TabFragment {
         if (magister == null) {
             LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.today_container);
             populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
-            return;
+        } else {
+            new TodayThread(this).execute();
         }
-        swipeRefresh.setRefreshing(true);
-        new TodayThread(this).execute();
     }
 
     @Override

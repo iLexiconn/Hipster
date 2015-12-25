@@ -59,10 +59,9 @@ public class AppointmentsTabFragment extends TabFragment {
         if (magister == null) {
             LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.appointments_container);
             populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
-            return;
+        } else {
+            new AppointmentThread(this).execute();
         }
-        swipeRefresh.setRefreshing(true);
-        new AppointmentThread(this).execute();
     }
 
     @Override

@@ -23,6 +23,11 @@ public class GradeThread extends FragmentThread<RecentGradesTabFragment, Grade[]
     }
 
     @Override
+    protected void onPreExecute() {
+        getTabFragment().swipeRefresh.setRefreshing(false);
+    }
+
+    @Override
     protected Grade[] onExecute() {
         GradeHandler gradeHandler = MainActivity.getMagister().getHandler(GradeHandler.class);
         try {
