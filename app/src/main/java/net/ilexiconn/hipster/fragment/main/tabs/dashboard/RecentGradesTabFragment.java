@@ -57,6 +57,7 @@ public class RecentGradesTabFragment extends TabFragment {
     @Override
     public void refresh(Magister magister) {
         if (magister == null) {
+            swipeRefresh.setRefreshing(false);
             LinearLayout todayLayout = (LinearLayout) view.findViewById(R.id.recent_grades_container);
             populateLayout(todayLayout, new ItemAdapter(new ArrayList<>(Collections.singletonList(new Item(getString(R.string.logged_off))))));
         } else {
