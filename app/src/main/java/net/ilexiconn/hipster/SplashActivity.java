@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+import com.crashlytics.android.Crashlytics;
 import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
+import io.fabric.sdk.android.Fabric;
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.util.ConfigUtil;
@@ -21,6 +23,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         Config config = ConfigUtil.loadConfig(this);
         final User currentUser = config.getCurrentUser();
         if (currentUser == null) {

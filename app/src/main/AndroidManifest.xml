@@ -47,6 +47,9 @@
                 android:name="net.ilexiconn.hipster.broadcast.HipsterBroadcastReceiver">
         </receiver>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b6ced39d2a544d2842b3b8a66a901700f9082f5e" />
     </application>
 
 </manifest>

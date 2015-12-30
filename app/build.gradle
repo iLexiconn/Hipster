@@ -1,4 +1,14 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 23
@@ -27,6 +37,7 @@ repositories {
     maven {
         url "http://dl.bintray.com/jlmd/maven"
     }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -44,4 +55,7 @@ dependencies {
     compile 'com.pes.materialcolorpicker:library:1.0.2'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
     compile 'com.github.jlmd:AnimatedCircleLoadingView:1.1.2@aar'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 }
