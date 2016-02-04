@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.util;
 
 import android.content.Context;
 import android.util.Log;
+
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.magister.util.GsonUtil;
 

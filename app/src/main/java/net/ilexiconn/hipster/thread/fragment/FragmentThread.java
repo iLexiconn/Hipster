@@ -3,6 +3,7 @@ package net.ilexiconn.hipster.thread.fragment;
 import android.os.AsyncTask;
 import android.support.annotation.MainThread;
 import android.support.v4.app.FragmentActivity;
+
 import net.ilexiconn.hipster.fragment.TabFragment;
 
 public abstract class FragmentThread<TYPE extends TabFragment, RESULT> extends AsyncTask<Void, Void, RESULT> {

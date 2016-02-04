@@ -1,7 +1,9 @@
 package net.ilexiconn.hipster.thread.fragment.timetable;
 
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.widget.LinearLayout;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.main.tabs.timetable.TodayTabFragment;
@@ -53,6 +55,7 @@ public class TodayThread extends FragmentThread<TodayTabFragment, Appointment[]>
                 String string2 = appointment.location;
                 String string3 = appointment.teachers.length > 0 ? appointment.teachers[0].abbreviation : null;
                 String string4 = format.format(appointment.startDate) + " - " + format.format(appointment.endDate);
+                Log.i("HIPSTER", (appointment.infoType) + "");
                 itemList.add(new Item(string1, string2, string3, string4));
             }
             if (itemList.isEmpty()) {

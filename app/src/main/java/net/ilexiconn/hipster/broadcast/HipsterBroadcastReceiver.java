@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.notification.HipsterNotification;

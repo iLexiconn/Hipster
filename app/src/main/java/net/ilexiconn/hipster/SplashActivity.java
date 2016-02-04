@@ -1,15 +1,21 @@
 package net.ilexiconn.hipster;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+
 import com.crashlytics.android.Crashlytics;
 import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
+
 import io.fabric.sdk.android.Fabric;
+
 import net.ilexiconn.hipster.config.Config;
 import net.ilexiconn.hipster.config.User;
 import net.ilexiconn.hipster.util.ConfigUtil;
@@ -44,10 +50,16 @@ public class SplashActivity extends Activity {
         new AsyncTask<Void, Void, ParcelableMagister>() {
             @Override
             protected ParcelableMagister doInBackground(Void... params) {
-                try {
-                    return ParcelableMagister.login(School.findSchool(currentUser.school)[0], currentUser.username, currentUser.password);
-                } catch (IOException | ParseException e) {
-                    e.printStackTrace();
+                ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                if (networkInfo.isConnected()) {
+                    try {
+                        return ParcelableMagister.login(School.findSchool(currentUser.school)[0], currentUser.username, currentUser.password);
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                } else {
                     return null;
                 }
             }

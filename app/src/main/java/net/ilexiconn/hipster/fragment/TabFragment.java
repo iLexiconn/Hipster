@@ -1,6 +1,7 @@
 package net.ilexiconn.hipster.fragment;
 
 import android.support.v4.app.Fragment;
+
 import net.ilexiconn.hipster.MainActivity;
 
 public abstract class TabFragment extends Fragment implements ITabFragment {

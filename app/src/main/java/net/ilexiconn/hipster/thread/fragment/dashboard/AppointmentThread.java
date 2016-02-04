@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.thread.fragment.dashboard;
 
 import android.support.design.widget.Snackbar;
 import android.widget.LinearLayout;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.main.tabs.dashboard.AppointmentsTabFragment;

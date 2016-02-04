@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;

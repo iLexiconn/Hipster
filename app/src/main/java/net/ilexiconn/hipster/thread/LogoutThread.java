@@ -3,6 +3,7 @@ package net.ilexiconn.hipster.thread;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.Fragments;

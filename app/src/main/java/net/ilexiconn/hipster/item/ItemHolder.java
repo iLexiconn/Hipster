@@ -3,6 +3,7 @@ package net.ilexiconn.hipster.item;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import net.ilexiconn.hipster.R;
 
 public class ItemHolder extends ViewHolder {

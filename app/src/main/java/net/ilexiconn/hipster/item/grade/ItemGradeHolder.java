@@ -3,6 +3,7 @@ package net.ilexiconn.hipster.item.grade;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.TextView;
+
 import net.ilexiconn.hipster.R;
 
 public class ItemGradeHolder extends ViewHolder {

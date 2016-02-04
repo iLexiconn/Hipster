@@ -3,10 +3,12 @@ package net.ilexiconn.hipster.config;
 import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 import net.ilexiconn.hipster.util.IMatcher;
 
 import java.io.File;

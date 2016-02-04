@@ -1,8 +1,10 @@
 package net.ilexiconn.hipster.fragment;
 
 import android.support.annotation.StringRes;
+
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.main.*;
 

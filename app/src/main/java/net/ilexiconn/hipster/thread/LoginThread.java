@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;
@@ -56,10 +57,16 @@ public class LoginThread extends AsyncTask<Void, Void, Magister> {
     @Override
     protected Magister doInBackground(Void... params) {
         try {
-            School s = School.findSchool(school.replaceAll(" ", "%20"))[0];
+            School s;
+            School[] ss = School.findSchool(school.replaceAll(" ", "%20"));
+            if (ss.length > 0) {
+                s = ss[0];
+            } else {
+                return null;
+            }
             SchoolUrl url = new SchoolUrl(s);
             HttpUtil.httpDelete(url.getCurrentSessionUrl());
-            Thread.sleep(5000); //Workaround for magister login error
+            Thread.sleep(2000); //Workaround for magister login error
             return Magister.login(s, username, password);
         } catch (IOException e) {
             Log.e("HIPSTER", "Unable to login", e);

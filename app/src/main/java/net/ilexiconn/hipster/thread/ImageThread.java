@@ -3,7 +3,9 @@ package net.ilexiconn.hipster.thread;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.config.Config;

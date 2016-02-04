@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import net.ilexiconn.hipster.R;
 
 import java.util.List;

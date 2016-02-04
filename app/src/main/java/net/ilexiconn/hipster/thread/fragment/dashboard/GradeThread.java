@@ -2,6 +2,7 @@ package net.ilexiconn.hipster.thread.fragment.dashboard;
 
 import android.support.design.widget.Snackbar;
 import android.widget.LinearLayout;
+
 import net.ilexiconn.hipster.MainActivity;
 import net.ilexiconn.hipster.R;
 import net.ilexiconn.hipster.fragment.main.tabs.dashboard.RecentGradesTabFragment;
@@ -10,6 +11,7 @@ import net.ilexiconn.hipster.item.ItemAdapter;
 import net.ilexiconn.hipster.thread.fragment.FragmentThread;
 import net.ilexiconn.magister.container.Grade;
 import net.ilexiconn.magister.handler.GradeHandler;
+
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
